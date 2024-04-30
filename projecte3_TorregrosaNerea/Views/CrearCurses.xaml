@@ -9,6 +9,6 @@
       Title="CrearCurses">
 
     <Grid>
-        
+        <TextBlock></TextBlock>
     </Grid>
 </Page>
