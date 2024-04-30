@@ -23,6 +23,58 @@ namespace projecte3_TorregrosaNerea.Views
         public ConsultarCurses()
         {
             InitializeComponent();
+            omplirCboFiltreiInicialitzarRB();
+            inicialitzarBotons();
         }
+
+        private void cboFiltre_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(cboFiltre.SelectedItem != null)
+            {
+                string seleccio = ((ComboBoxItem)cboFiltre.SelectedItem).Content.ToString();
+                switch(seleccio) {
+                    case "Filtrar per nom":
+                        dpFiltreData.Visibility = Visibility.Collapsed;
+                        txbFiltreNom.Visibility = Visibility.Visible;
+                        spEstats.Visibility = Visibility.Collapsed;
+                        break;
+                    case "Filtrar per data":
+                        dpFiltreData.Visibility = Visibility.Visible;
+                        txbFiltreNom.Visibility = Visibility.Collapsed;
+                        spEstats.Visibility = Visibility.Collapsed;
+                        break;
+                    case "Filtrar per estat":
+                        dpFiltreData.Visibility = Visibility.Collapsed;
+                        txbFiltreNom.Visibility = Visibility.Collapsed;
+                        spEstats.Visibility = Visibility.Visible;
+                        break;
+                }
+            }
+        }
+
+        private void dgCurses_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(dgCurses.SelectedItem != null)
+            {
+                btnGestionarCircuits.IsEnabled = true;
+                btnEditarCursa.IsEnabled = true;
+            }
+        }
+        public void omplirCboFiltreiInicialitzarRB()
+        {
+            cboFiltre.Items.Clear();
+            cboFiltre.Items.Add("Filtrar per nom");
+            cboFiltre.Items.Add("Filtrar per data");
+            cboFiltre.Items.Add("Filtrar per estat");
+            rbActives.IsChecked = true;
+        }
+        public void inicialitzarBotons() { 
+            btnFiltrar.IsEnabled = false;
+            btnNetejarFiltres.IsEnabled = false;
+            btnEditarCursa.IsEnabled = false;
+            btnGestionarCircuits.IsEnabled = false;
+        }
+
+        
     }
 }

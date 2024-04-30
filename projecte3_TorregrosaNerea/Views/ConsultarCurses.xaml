@@ -5,10 +5,86 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:projecte3_TorregrosaNerea.Views"
       mc:Ignorable="d" 
+      Background="White"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ConsultarCurses">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="0.3*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Consultar Curses" FontWeight="Bold" FontSize="40" TextDecorations="Underline" Foreground="Black"></TextBlock>
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ComboBox x:Name="cboFiltre" Grid.Column="0" Height="30" SelectionChanged="cboFiltre_SelectionChanged"></ComboBox>
+            <TextBox x:Name="txbFiltreNom" Grid.Column="1" Grid.ColumnSpan="2" Height="30" Margin="10,0,0,0" Visibility="Collapsed"></TextBox>
+            <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal">
+                <DatePicker Name="dpFiltreData" DisplayDateStart="2023-01-01" DisplayDateEnd="2025-12-31" Margin="10,0,0,0" Height="30" SelectedDateFormat="Short" Visibility="Collapsed"/>
+            </StackPanel>
+            <StackPanel x:Name="spEstats" Height="30" Margin="10,0,0,0" Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="2" Visibility="Collapsed">
+                <RadioButton x:Name="rbActives" Content="Actives" GroupName="Estat" Margin="10,0,0,0"/>
+                <RadioButton x:Name="rbTancades" Content="Tancades" GroupName="Estat" Margin="10,0,0,0"/>
+                <RadioButton x:Name="rbCancelades" Content="Cancel·lades" GroupName="Estat" Margin="10,0,0,0"/>
+            </StackPanel>
+            <Button x:Name="btnFiltrar" Grid.Column="3" Height="30" Width="100" Content="Filtrar"></Button>
+            <Button x:Name="btnNetejarFiltres" Grid.Column="4" Height="30" Width="100" Content="Netejar filtres"></Button>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <DataGrid x:Name="dgCurses" Margin="10,0,0,0" SelectionChanged="dgCurses_SelectionChanged"></DataGrid>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Margin="5">
+                <Grid x:Name="grdDetallCursa">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.5*"></RowDefinition>
+                        <RowDefinition Height="2.5*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="txbEstatCursa" Grid.Row="0" Grid.Column="0" Text="En preparació" Margin="10,0,0,0"></TextBlock>
+                    <TextBlock x:Name="txbDataCursa" Grid.Row="0" Grid.Column="1" Text="15/06/2024" Margin="0,0,10,0" HorizontalAlignment="Right"></TextBlock>
+                    <Image x:Name="imgCursa" Grid.Row="1" Grid.Column="0" Width="120" Source="/Assets/carrera.png" HorizontalAlignment="Left" Margin="10,0,0,0"></Image>
+                    <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" Margin="0,20,0,0">
+                        <TextBlock x:Name="txbLlocCursa"  Text="Girona" Height="30" Margin="10,0,0,0" ></TextBlock>
+                        <TextBlock x:Name="txbNumInscritsiLimit"  Text="42/150" Height="30" Margin="10,0,0,0" ></TextBlock>
+                    </StackPanel>
+                    <TextBlock x:Name="txbNomCursa" Text="Cursa del pa amb tomàquet" Grid.Row="2" Grid.Column="0" Height="30" Margin="10,0,0,0"></TextBlock>
+                    <TextBlock x:Name="txbEsportiCategoria" Text="Running General" Grid.Row="2" Grid.Column="1" Height="30" Margin="10,0,0,0"></TextBlock>
+                    <ListView x:Name="lsvCircuits" Grid.Row="3" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Center" Width="100">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Circuits" DisplayMemberBinding="{Binding Circuits}"/>
+                                <GridViewColumn Header="Distancia" DisplayMemberBinding="{Binding Distancia}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </Border>
+        </Grid>
         
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnGestionarCircuits" Grid.Column="0" Height="30" Width="100" Content="Gestionar Cricuits" HorizontalAlignment="Left" Margin="10,0,0,0"></Button>
+            <Button x:Name="btnEditarCursa" Grid.Column="1" Height="30" Width="100" Content="Editar Cursa" HorizontalAlignment="Right" Margin="0,0,10,0"></Button>
+        </Grid>
     </Grid>
 </Page>

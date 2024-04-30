@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "projecte3_TorregrosaNerea/1.0.0": {
+        "runtime": {
+          "projecte3_TorregrosaNerea.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "projecte3_TorregrosaNerea/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
