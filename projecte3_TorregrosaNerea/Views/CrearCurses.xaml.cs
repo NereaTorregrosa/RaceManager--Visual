@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BD_MySQL.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,28 @@ namespace projecte3_TorregrosaNerea.Views
         public CrearCurses()
         {
             InitializeComponent();
+            omplirComboBoxEsports();
         }
+
+        private void cboTipus_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cboTipus.SelectedItem != null)
+            {
+                BDEsport esportSeleccionat = cboTipus.SelectedItem as BDEsport;
+                cboCategoria.ItemsSource = BDCategoria.getCategoriesFromEsport(esportSeleccionat.Id);
+            }
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.navigationFrame.Navigate(new ConsultarCurses());
+        }
+        public void omplirComboBoxEsports()
+        {
+            cboTipus.ItemsSource = BDEsport.getEsports();
+            
+        }
+
+        
     }
 }

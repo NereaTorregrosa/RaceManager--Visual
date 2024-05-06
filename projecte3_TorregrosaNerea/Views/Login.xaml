@@ -20,9 +20,9 @@
             </Grid.RowDefinitions>
             <TextBlock Text="User" FontSize="20" Grid.Column="0" Grid.Row="0" Margin="10"></TextBlock>
             <TextBlock Text="Password" FontSize="20" Grid.Column="0" Grid.Row="1" Margin="10"></TextBlock>
-            <TextBox x:Name="txtUser" Text="plopez" Grid.Column="1" FontSize="20" Grid.Row="0" Width="200" Margin="10"></TextBox>
-            <PasswordBox x:Name="txtPass" Password="clau2" PasswordChar="*" Grid.Column="1" FontSize="20" Grid.Row="1" Width="200" Margin="10"></PasswordBox>
+            <TextBox x:Name="txtUser" Text="admin" Grid.Column="1" FontSize="20" Grid.Row="0" Width="200" Margin="10"></TextBox>
+            <PasswordBox x:Name="txtPass" Password="1234" PasswordChar="*" Grid.Column="1" FontSize="20" Grid.Row="1" Width="200" Margin="10"></PasswordBox>
         </Grid>
-        <Button x:Name="btnLogin" Content="Sign in" FontSize="20" Margin="10" Width="80"></Button>
+        <Button x:Name="btnLogin" Content="Sign in" Click="btnLogin_Click" FontSize="20" Margin="10" Width="80"></Button>
     </StackPanel>
 </Page>

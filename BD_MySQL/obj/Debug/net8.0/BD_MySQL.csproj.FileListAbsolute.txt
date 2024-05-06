@@ -1,0 +1,13 @@
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\BD_MySQL\bin\Debug\net8.0\BD_MySQL.deps.json
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\BD_MySQL\bin\Debug\net8.0\BD_MySQL.dll
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\BD_MySQL\bin\Debug\net8.0\BD_MySQL.pdb
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\BD_MySQL\obj\Debug\net8.0\BD_MySQL.csproj.AssemblyReference.cache
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\BD_MySQL\obj\Debug\net8.0\BD_MySQL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\BD_MySQL\obj\Debug\net8.0\BD_MySQL.AssemblyInfoInputs.cache
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\BD_MySQL\obj\Debug\net8.0\BD_MySQL.AssemblyInfo.cs
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\BD_MySQL\obj\Debug\net8.0\BD_MySQL.csproj.CoreCompileInputs.cache
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\BD_MySQL\obj\Debug\net8.0\BD_MySQL.sourcelink.json
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\BD_MySQL\obj\Debug\net8.0\BD_MySQL.dll
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\BD_MySQL\obj\Debug\net8.0\refint\BD_MySQL.dll
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\BD_MySQL\obj\Debug\net8.0\BD_MySQL.pdb
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\BD_MySQL\obj\Debug\net8.0\ref\BD_MySQL.dll

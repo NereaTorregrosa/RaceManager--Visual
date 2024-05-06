@@ -22,9 +22,39 @@
                 <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Nom*:" Margin="20,0,0,0" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Data inici*:" Margin="20,0,0,0" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Data fi*:" Margin="20,0,0,0" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="3" Text="Lloc*:" Margin="20,0,0,0" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="4" Text="Descripció:" Margin="20,0,0,0" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="5" Text="Website:" Margin="20,0,0,0" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="6" Text="Limit inscripcions*:" Margin="20,0,0,0" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="7" Text="Tipus*:" Margin="20,0,0,0" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="8" Text="Categoria*:" Margin="20,0,0,0" VerticalAlignment="Center"></TextBlock>
+            <TextBox x:Name="txbNom" Grid.Column="1" Grid.Row="0" Margin="0,0,0,5"></TextBox>
+            <DatePicker Name="dpDataInici" Grid.Column="1" Grid.Row="1" DisplayDateStart="2023-01-01" DisplayDateEnd="2025-12-31" SelectedDateFormat="Short" Margin="0,0,0,5"/>
+            <DatePicker Name="dpDataFi" Grid.Column="1" Grid.Row="2" DisplayDateStart="2023-01-01" DisplayDateEnd="2025-12-31" SelectedDateFormat="Short" Margin="0,0,0,5"/>
+            <TextBox x:Name="txbLloc" Grid.Column="1" Grid.Row="3" Margin="0,0,0,5"></TextBox>
+            <TextBox x:Name="txbDesc" Grid.Column="1" Grid.Row="4" Margin="0,0,0,5"></TextBox>
+            <TextBox x:Name="txbWebsite" Grid.Column="1" Grid.Row="5" Margin="0,0,0,5"></TextBox>
+            <TextBox x:Name="txbLimitInscripcions" Grid.Column="1" Grid.Row="6" Width="100" HorizontalAlignment="Left" Margin="0,0,0,5"></TextBox>
+            <ComboBox x:Name="cboTipus" SelectionChanged="cboTipus_SelectionChanged" DisplayMemberPath="Nom" Grid.Column="1" Grid.Row="7" Margin="0,0,0,5"></ComboBox>
+            <ComboBox x:Name="cboCategoria" Grid.Column="1" Grid.Row="8" Margin="0,0,0,5" DisplayMemberPath="Nom"></ComboBox>
+            <Image x:Name="imgCursa" Grid.Column="2" Grid.Row="0" Grid.RowSpan="5" Width="200" Source="/Assets/carrera.png" Margin="0,0,0,5"></Image>
+            <Button x:Name="btnElegirFoto" Grid.Column="2" Grid.Row="5" Height="30" Width="100" Content="Escollir fotografia"></Button>
         </Grid>
         <Button x:Name="btnGuardar" Grid.Row="2" Height="30" Width="100" Content="Guardar" HorizontalAlignment="Right" Margin="0,0,10,0"></Button>
-        <Button x:Name="btnCancel" Grid.Row="2" Height="30" Width="100" Content="Cancel·lar" HorizontalAlignment="Left" Margin="10,0,0,0"></Button>
+        <Button x:Name="btnCancel" Grid.Row="2" Height="30" Width="100" Content="Cancel·lar" HorizontalAlignment="Left" Margin="10,0,0,0" Click="btnCancel_Click"></Button>
     </Grid>
 </Page>

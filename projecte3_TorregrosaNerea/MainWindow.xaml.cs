@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using projecte3_TorregrosaNerea.Views;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,9 +17,15 @@ namespace projecte3_TorregrosaNerea
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static Frame navigationFrame;
         public MainWindow()
         {
             InitializeComponent();
+            Application.Current.MainWindow.WindowState = WindowState.Maximized;
+
+            navigationFrame = contentFrame;
+
+            navigationFrame.Navigate(new Login());
         }
     }
 }

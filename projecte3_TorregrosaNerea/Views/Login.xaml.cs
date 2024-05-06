@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BD_MySQL.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,19 @@ namespace projecte3_TorregrosaNerea.Views
         public Login()
         {
             InitializeComponent();
+        }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            bool ok = false;
+            ok = BDUsuari.isLoginCorrect(txtUser.Text, txtPass.Password);
+            if (ok)
+            {
+                MainWindow.navigationFrame.Navigate(new ConsultarCurses());
+            } else
+            {
+                MessageBox.Show("Nom d'usuari o contrasenya incorrectes.");
+            }
         }
     }
 }

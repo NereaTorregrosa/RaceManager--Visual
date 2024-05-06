@@ -8,4 +8,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BD_MySQL\BD_MySQL.csproj" />
+  </ItemGroup>
+
 </Project>
