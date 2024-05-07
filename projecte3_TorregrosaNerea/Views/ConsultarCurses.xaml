@@ -46,8 +46,8 @@
             <DataGrid x:Name="dgCurses" Margin="10,0,0,0" SelectionChanged="dgCurses_SelectionChanged" Foreground="Black" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nom" Binding="{Binding Nom}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Data inici" Binding="{Binding DataInici}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Data fi" Binding="{Binding DataFi}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Data inici" Binding="{Binding DataInici, StringFormat={}{0:dd/MM/yyyy}}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Data fi" Binding="{Binding DataFi, StringFormat={}{0:dd/MM/yyyy}}"></DataGridTextColumn>
                     <DataGridTextColumn Width="*" Header="Lloc" Binding="{Binding Lloc}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
@@ -74,10 +74,11 @@
                     <TextBlock x:Name="txbNomCursa" Text="Cursa del pa amb tomàquet" Grid.Row="2" Grid.Column="0" Height="30" Margin="10,0,0,0"></TextBlock>
                     <TextBlock x:Name="txbEsportiCategoria" Text="Running General" Grid.Row="2" Grid.Column="1" Height="30" Margin="10,0,0,0"></TextBlock>
                     <Button x:Name="btnGestionarCircuits" Grid.Column="1" Grid.Row="4" Height="30" Width="100" Content="Gestionar Cricuits" HorizontalAlignment="Left" Margin="10,0,0,0"></Button>
-                    <ListView x:Name="lsvCircuits" Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" HorizontalAlignment="Center" Width="100">
+                    <ListView x:Name="lsvCircuits" Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" HorizontalAlignment="Center" Margin="0,0,0,10">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Circuits" DisplayMemberBinding="{Binding Circuits}"/>
+                                <GridViewColumn Header="Circuit" DisplayMemberBinding="{Binding Nom}"/>
+                                <GridViewColumn Header="Categoria" DisplayMemberBinding="{Binding Categoria}"/>
                                 <GridViewColumn Header="Distancia" DisplayMemberBinding="{Binding Distancia}"/>
                             </GridView>
                         </ListView.View>

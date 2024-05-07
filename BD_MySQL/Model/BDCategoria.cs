@@ -50,5 +50,29 @@ namespace BD_MySQL.Model
                 }
             }
         }
+
+        public static string getCategoriaById(int id)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+                    using (var consulta = connexio.CreateCommand())
+                    {
+                        DBUtils.createParam(consulta, "id", id, System.Data.DbType.Int32);
+
+                        consulta.CommandText = @"select cat_nom from categories where cat_id = @id";
+                        DbDataReader reader = consulta.ExecuteReader();
+                        string nomCategoria = "";
+                        while (reader.Read())
+                        {
+                            nomCategoria = reader.GetString(reader.GetOrdinal("cat_nom"));
+                        }
+                        return nomCategoria;
+                    }
+                }
+            }
+        }
     }
 }

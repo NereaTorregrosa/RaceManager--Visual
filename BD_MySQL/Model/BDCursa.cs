@@ -107,9 +107,59 @@ namespace BD_MySQL.Model
             }
         }
 
-        public static void insertCursa(BDCursa c)
+        public static bool insertCursa(BDCursa c)
         {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
 
+                    DbTransaction transaccion = connexio.BeginTransaction();
+
+                    try
+                    {
+                        using (var consulta = connexio.CreateCommand())
+                        {
+                            consulta.Transaction = transaccion;
+                            DBUtils.createParam(consulta, "nom", c.Nom, System.Data.DbType.String);
+                            DBUtils.createParam(consulta, "data_inici", c.dataInici, System.Data.DbType.DateTime);
+                            DBUtils.createParam(consulta, "data_fi", c.DataFi, System.Data.DbType.DateTime);
+                            DBUtils.createParam(consulta, "lloc", c.Lloc, System.Data.DbType.String);
+                            DBUtils.createParam(consulta, "esportId", c.EsportId, System.Data.DbType.Int32);
+                            DBUtils.createParam(consulta, "estatId", c.EstatId, System.Data.DbType.Int32);
+                            DBUtils.createParam(consulta, "descripcio", c.Descripcio, System.Data.DbType.String);
+                            DBUtils.createParam(consulta, "limit_insc", c.LimitInscripcions, System.Data.DbType.Int32);
+                            DBUtils.createParam(consulta, "url_foto", c.UrlFoto, System.Data.DbType.String);
+                            DBUtils.createParam(consulta, "url_web", c.UrlWeb, System.Data.DbType.String);
+
+                            consulta.CommandText = @"INSERT INTO curses (cur_nom,cur_data_inici,
+                                                    cur_data_fi,cur_lloc,cur_esp_id,cur_est_id,
+                                                    cur_desc,cur_limit_inscr,cur_foto,cur_web) 
+                                                    VALUES (@nom, @data_inici,
+                                                    @data_fi,
+                                                    @lloc,
+                                                    @esportId,
+                                                    @estatId,
+                                                    @descripcio,
+                                                    @limit_insc,
+                                                    @url_foto,
+                                                    @url_web)";
+
+                            consulta.ExecuteNonQuery();
+                            transaccion.Commit();
+                            return true;
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        transaccion.Rollback();
+                        return false;
+                    }
+
+                }
+            }
         }
     }
 }

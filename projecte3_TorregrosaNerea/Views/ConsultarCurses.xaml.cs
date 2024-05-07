@@ -21,12 +21,14 @@ namespace projecte3_TorregrosaNerea.Views
     /// </summary>
     public partial class ConsultarCurses : Page
     {
+        private List<BDCircuit> circuitsCursa;
         public ConsultarCurses()
         {
             InitializeComponent();
             omplirCboFiltreiInicialitzarRB();
             inicialitzarBotons();
             launchGetCurses();
+            circuitsCursa = new List<BDCircuit>();
         }
 
         private void cboFiltre_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -144,6 +146,9 @@ namespace projecte3_TorregrosaNerea.Views
             txbNumInscritsiLimit.Text = cursaSeleccionada.LimitInscripcions.ToString();
             BitmapImage bitmapImage = new BitmapImage(new Uri(cursaSeleccionada.UrlFoto));
             imgCursa.Source = bitmapImage;
+
+            circuitsCursa = BDCircuit.getCircuitsFromCursa(cursaSeleccionada.Id);
+            lsvCircuits.ItemsSource = circuitsCursa;
         }
 
     }
