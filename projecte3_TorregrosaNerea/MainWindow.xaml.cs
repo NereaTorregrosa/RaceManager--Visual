@@ -18,14 +18,16 @@ namespace projecte3_TorregrosaNerea
     public partial class MainWindow : Window
     {
         public static Frame navigationFrame;
+        public static MainWindow mainWindow;
         public MainWindow()
         {
             InitializeComponent();
             Application.Current.MainWindow.WindowState = WindowState.Maximized;
 
             navigationFrame = contentFrame;
-
+            mainWindow = this;
             navigationFrame.Navigate(new Login());
+
         }
     }
 }

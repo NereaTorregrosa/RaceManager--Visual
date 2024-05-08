@@ -10,6 +10,9 @@
     <Compile Update="Views\ConsultarCurses.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\CrearCircuits.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\CrearCurses.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -22,6 +25,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ConsultarCurses.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CrearCircuits.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CrearCurses.xaml">

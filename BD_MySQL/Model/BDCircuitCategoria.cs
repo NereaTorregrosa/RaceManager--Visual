@@ -55,5 +55,10 @@ namespace BD_MySQL.Model
                 }
             }
         }
+
+        public static bool insertCircuitCategoria(int idCategoria, int idCircuit)
+        {
+            return false;
+        }
     }
 }

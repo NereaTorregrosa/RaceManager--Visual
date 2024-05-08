@@ -22,6 +22,7 @@ namespace projecte3_TorregrosaNerea.Views
     public partial class ConsultarCurses : Page
     {
         private List<BDCircuit> circuitsCursa;
+        private BDCursa cursaSeleccionada;
         public ConsultarCurses()
         {
             InitializeComponent();
@@ -68,7 +69,8 @@ namespace projecte3_TorregrosaNerea.Views
             if(dgCurses.SelectedItem != null)
             {
                 grdDetallCursa.Visibility = Visibility.Visible;
-                btnGestionarCircuits.IsEnabled = true;
+                btnEditarCircuit.IsEnabled = true;
+                btnCrearCircuit.IsEnabled = true;
                 btnEditarCursa.IsEnabled = true;
                 mostrarDetallCursa();
             }
@@ -93,6 +95,11 @@ namespace projecte3_TorregrosaNerea.Views
             rbTancades.IsChecked = false;
             launchGetCurses();
         }
+
+        private void btnCrearCircuit_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.navigationFrame.Navigate(new CrearCircuits(cursaSeleccionada));
+        }
         public void omplirCboFiltreiInicialitzarRB()
         {
             cboFiltre.Items.Clear();
@@ -104,7 +111,8 @@ namespace projecte3_TorregrosaNerea.Views
             btnFiltrar.IsEnabled = false;
             btnNetejarFiltres.IsEnabled = false;
             btnEditarCursa.IsEnabled = false;
-            btnGestionarCircuits.IsEnabled = false;
+            btnEditarCircuit.IsEnabled = false;
+            btnCrearCircuit.IsEnabled = false;
             grdDetallCursa.Visibility = Visibility.Collapsed;
         }
 
@@ -136,13 +144,13 @@ namespace projecte3_TorregrosaNerea.Views
 
         private void mostrarDetallCursa()
         {
-            BDCursa cursaSeleccionada = dgCurses.SelectedItem as BDCursa;
+            cursaSeleccionada = dgCurses.SelectedItem as BDCursa;
 
-            txbNomCursa.Text = cursaSeleccionada.Nom;
+            txbNomCursa.Text = cursaSeleccionada.Nom.ToUpper();
             txbDataCursa.Text = cursaSeleccionada.DataInici.ToString("dd/MM/yyyy");
-            txbLlocCursa.Text = cursaSeleccionada.Lloc;
-            txbEsportiCategoria.Text = cursaSeleccionada.EsportId.ToString();
-            txbEstatCursa.Text = cursaSeleccionada.EstatId.ToString();
+            txbLlocCursa.Text = cursaSeleccionada.Lloc.ToUpper();
+            txbEsportiCategoria.Text = BDEsport.getEsportById(cursaSeleccionada.EsportId).ToUpper();
+            txbEstatCursa.Text = BDEstat.getEstatById(cursaSeleccionada.EstatId).ToUpper();
             txbNumInscritsiLimit.Text = cursaSeleccionada.LimitInscripcions.ToString();
             BitmapImage bitmapImage = new BitmapImage(new Uri(cursaSeleccionada.UrlFoto));
             imgCursa.Source = bitmapImage;
@@ -150,6 +158,5 @@ namespace projecte3_TorregrosaNerea.Views
             circuitsCursa = BDCircuit.getCircuitsFromCursa(cursaSeleccionada.Id);
             lsvCircuits.ItemsSource = circuitsCursa;
         }
-
     }
 }

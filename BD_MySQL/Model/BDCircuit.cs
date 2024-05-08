@@ -83,5 +83,10 @@ namespace BD_MySQL.Model
                 }
             }
         }
+
+        public bool insertCircuit(int idCursa)
+        {
+            return false;
+        }
     }
 }

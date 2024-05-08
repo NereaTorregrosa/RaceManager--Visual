@@ -46,5 +46,29 @@ namespace BD_MySQL.Model
                 }
             }
         }
+
+        public static string getEsportById(int id)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+                    using (var consulta = connexio.CreateCommand())
+                    {
+                        DBUtils.createParam(consulta, "id", id, System.Data.DbType.Int32);
+
+                        consulta.CommandText = @"select esp_nom from esports where esp_id = @id";
+                        DbDataReader reader = consulta.ExecuteReader();
+                        string nomEsport = "";
+                        while (reader.Read())
+                        {
+                            nomEsport = reader.GetString(reader.GetOrdinal("esp_nom"));
+                        }
+                        return nomEsport;
+                    }
+                }
+            }
+        }
     }
 }

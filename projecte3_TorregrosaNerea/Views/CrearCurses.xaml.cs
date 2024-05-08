@@ -98,11 +98,6 @@ namespace projecte3_TorregrosaNerea.Views
                 BDEsport e = cboTipus.SelectedItem as BDEsport;
                 esportId = e.Id;
             }
-            // if(cboCategoria.SelectedItem != null)
-            //{
-            //    BDCategoria ca = cboCategoria.SelectedItem as BDCategoria;
-
-            //}
              
              string descripcio = txbDesc.Text;
              int limitInscripcions = Int32.Parse(txbLimitInscripcions.Text);
