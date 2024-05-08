@@ -65,7 +65,7 @@ namespace projecte3_TorregrosaNerea.Views
 
         private void txbLimitInscripcions_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!EsNumeroEnter(txbLimitInscripcions.Text) || string.IsNullOrEmpty(txbLimitInscripcions.Text))
+            if (!Utils.EsNumeroEnter(txbLimitInscripcions.Text) || string.IsNullOrEmpty(txbLimitInscripcions.Text))
             {
 
                 txbLimitInscripcions.Background = Brushes.Red;
@@ -123,18 +123,6 @@ namespace projecte3_TorregrosaNerea.Views
             
              
 
-        }
-
-        private bool EsNumeroEnter(string text)
-        {
-            if (int.TryParse(text, out _))
-            {
-                return true;
-            }
-            else
-            {
-                return false; 
-            }
         }
 
         public async void elegirFoto()

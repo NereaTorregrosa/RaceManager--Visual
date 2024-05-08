@@ -16,10 +16,10 @@ namespace BD_MySQL.Model
         private double distancia;
         private string nom;
         private decimal preu;
-        private TimeSpan tempsEstimat;
+        private DateTime tempsEstimat;
         private string categoria;
 
-        public BDCircuit(int id, int cursaId, int numero, double distancia, string nom, decimal preu, TimeSpan tempsEstimat)
+        public BDCircuit(int id, int cursaId, int numero, double distancia, string nom, decimal preu, DateTime tempsEstimat)
         {
             Id = id;
             CursaId = cursaId;
@@ -30,7 +30,7 @@ namespace BD_MySQL.Model
             TempsEstimat = tempsEstimat;
         }
 
-        public BDCircuit(int cursaId, int numero, double distancia, string nom, decimal preu, TimeSpan tempsEstimat)
+        public BDCircuit(int cursaId, int numero, double distancia, string nom, decimal preu, DateTime tempsEstimat)
         {
             CursaId = cursaId;
             Numero = numero;
@@ -46,7 +46,7 @@ namespace BD_MySQL.Model
         public double Distancia { get => distancia; set => distancia = value; }
         public string Nom { get => nom; set => nom = value; }
         public decimal Preu { get => preu; set => preu = value; }
-        public TimeSpan TempsEstimat { get => tempsEstimat; set => tempsEstimat = value; }
+        public DateTime TempsEstimat { get => tempsEstimat; set => tempsEstimat = value; }
         public string Categoria { get => categoria; set => categoria = value; }
 
         public static List<BDCircuit> getCircuitsFromCursa(int idCursa)
@@ -71,8 +71,7 @@ namespace BD_MySQL.Model
                             string nom = reader.GetString(reader.GetOrdinal("cir_nom"));
                             decimal preu = reader.GetDecimal(reader.GetOrdinal("cir_preu"));
                             DateTime temps = reader.GetDateTime(reader.GetOrdinal("cir_temps_estimat"));
-                            TimeSpan tempsEstimat = temps.TimeOfDay;
-                            BDCircuit circuit = new BDCircuit(id, cursaId, numero, distancia, nom, preu, tempsEstimat);
+                            BDCircuit circuit = new BDCircuit(id, cursaId, numero, distancia, nom, preu, temps);
                             int idcategoria = BDCircuitCategoria.getCategoriaId(id);
                             string categoria = BDCategoria.getCategoriaById(idcategoria);
                             circuit.Categoria = categoria;
@@ -84,9 +83,72 @@ namespace BD_MySQL.Model
             }
         }
 
-        public bool insertCircuit(int idCursa)
+        public static bool insertCircuit(BDCircuit c)
         {
-            return false;
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+
+                    DbTransaction transaccion = connexio.BeginTransaction();
+
+                    try
+                    {
+                        using (var consulta = connexio.CreateCommand())
+                        {
+                            consulta.Transaction = transaccion;
+                            DBUtils.createParam(consulta, "nom", c.Nom, System.Data.DbType.String);
+                            DBUtils.createParam(consulta, "numero", c.Numero, System.Data.DbType.Int32);
+                            DBUtils.createParam(consulta, "distancia", c.Distancia, System.Data.DbType.Double);
+                            DBUtils.createParam(consulta, "cursaId", c.CursaId, System.Data.DbType.Int32);
+                            DBUtils.createParam(consulta, "preu", c.Preu, System.Data.DbType.Decimal);
+                            DBUtils.createParam(consulta, "tempsEstimat", c.TempsEstimat, System.Data.DbType.DateTime);
+
+                            consulta.CommandText = @"INSERT INTO circuits (cir_cur_id,cir_num,
+                                                    cir_distancia,cir_nom,cir_preu,cir_temps_estimat) 
+                                                    VALUES (@cursaId, @numero,
+                                                    @distancia,
+                                                    @nom,
+                                                    @preu,
+                                                    @tempsEstimat)";
+
+                            consulta.ExecuteNonQuery();
+                            transaccion.Commit();
+                            return true;
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        transaccion.Rollback();
+                        return false;
+                    }
+
+                }
+            }
+        }
+
+        public static int ObtenirUltimCircuitId()
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+                    using (var consulta = connexio.CreateCommand())
+                    {
+                        consulta.CommandText = @"SELECT cir_id FROM circuits ORDER BY cir_id DESC LIMIT 1";
+                        int ultimCircuitId = -1;
+                        object resultat = consulta.ExecuteScalar();
+                        if (resultat != null && resultat != DBNull.Value)
+                        {
+                            ultimCircuitId = Convert.ToInt32(resultat);
+                        }
+                        return ultimCircuitId;
+                    }
+                }
+            }
         }
     }
 }

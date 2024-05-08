@@ -58,7 +58,39 @@ namespace BD_MySQL.Model
 
         public static bool insertCircuitCategoria(int idCategoria, int idCircuit)
         {
-            return false;
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+
+                    DbTransaction transaccion = connexio.BeginTransaction();
+
+                    try
+                    {
+                        using (var consulta = connexio.CreateCommand())
+                        {
+                            consulta.Transaction = transaccion;
+                            DBUtils.createParam(consulta, "idCategoria", idCategoria, System.Data.DbType.Int32);
+                            DBUtils.createParam(consulta, "idCircuit", idCircuit, System.Data.DbType.Int32);
+
+                            consulta.CommandText = @"INSERT INTO circuits_categories (ccc_cat_id,ccc_cir_id) 
+                                                    VALUES (@idCategoria, @idCircuit)";
+
+                            consulta.ExecuteNonQuery();
+                            transaccion.Commit();
+                            return true;
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        transaccion.Rollback();
+                        return false;
+                    }
+
+                }
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using BD_MySQL.Model;
+﻿using BD_MySQL;
+using BD_MySQL.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,9 @@ namespace projecte3_TorregrosaNerea.Views
     {
         private List<BDCircuit> circuitsCursa;
         private BDCursa cursaSeleccionada;
+        private OC<BDCheckpoints> checkpoints;
+        private BDCheckpoints checkpointEditat;
+        private BDCircuit circuitSeleccionat;
         public ConsultarCurses()
         {
             InitializeComponent();
@@ -30,6 +34,7 @@ namespace projecte3_TorregrosaNerea.Views
             inicialitzarBotons();
             launchGetCurses();
             circuitsCursa = new List<BDCircuit>();
+            checkpoints = new OC<BDCheckpoints>();
         }
 
         private void cboFiltre_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -100,6 +105,45 @@ namespace projecte3_TorregrosaNerea.Views
         {
             MainWindow.navigationFrame.Navigate(new CrearCircuits(cursaSeleccionada));
         }
+
+        private void lsvCircuits_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lsvCircuits.SelectedItem != null)
+            {
+                btnCrearKMChk.IsEnabled = true;
+                btnGuardarKMChk.IsEnabled = true;
+                btnEliminarKMChk.IsEnabled = true;
+                mostrarCheckpointsCursa();
+                circuitSeleccionat = lsvCircuits.SelectedItem as BDCircuit;
+
+            }
+            else
+            {
+                btnCrearKMChk.IsEnabled = false;
+                btnGuardarKMChk.IsEnabled = false;
+                btnEliminarKMChk.IsEnabled = false;
+            }
+        }
+
+        private void btnCrearKMChk_Click(object sender, RoutedEventArgs e)
+        {
+            checkpoints.Add(new BDCheckpoints());
+            dgKilometresCircuit.ItemsSource = checkpoints;
+        }
+
+        private void btnGuardarKMChk_Click(object sender, RoutedEventArgs e)
+        {
+            afegirKilometreACircuit();
+        }
+
+
+        private void dgKilometresCircuit_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            DataGridRow row = e.Row;
+            checkpointEditat = (BDCheckpoints)row.Item;
+            checkpointEditat.IdCircuit = circuitSeleccionat.Id;
+
+        }
         public void omplirCboFiltreiInicialitzarRB()
         {
             cboFiltre.Items.Clear();
@@ -114,6 +158,9 @@ namespace projecte3_TorregrosaNerea.Views
             btnEditarCircuit.IsEnabled = false;
             btnCrearCircuit.IsEnabled = false;
             grdDetallCursa.Visibility = Visibility.Collapsed;
+            btnCrearKMChk.IsEnabled = false;
+            btnGuardarKMChk.IsEnabled = false;
+            btnEliminarKMChk.IsEnabled = false;
         }
 
         private void launchGetCurses()
@@ -158,5 +205,32 @@ namespace projecte3_TorregrosaNerea.Views
             circuitsCursa = BDCircuit.getCircuitsFromCursa(cursaSeleccionada.Id);
             lsvCircuits.ItemsSource = circuitsCursa;
         }
+
+        private void mostrarCheckpointsCursa()
+        {
+            if(lsvCircuits.SelectedItem != null) { 
+                BDCircuit circuitActual = lsvCircuits.SelectedItem as BDCircuit;
+                checkpoints = BDCheckpoints.getCheckpointsFromCircuit(circuitActual.Id);
+                dgKilometresCircuit.ItemsSource = null;
+                dgKilometresCircuit.ItemsSource = checkpoints;
+            }
+        }
+
+        private void afegirKilometreACircuit()
+        {
+            bool ok = BDCheckpoints.insertCheckpoint(checkpointEditat);
+            if (ok)
+            {
+                MessageBox.Show("Kilòmetre inserit correctament.");
+                mostrarCheckpointsCursa();
+
+            }
+            else
+            {
+                MessageBox.Show("No s'ha pogut inserir el kilòmetre.");
+            }
+        }
+
+
     }
 }

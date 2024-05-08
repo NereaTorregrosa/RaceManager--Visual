@@ -16,7 +16,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="0.2*"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="Consultar Curses" FontWeight="Bold" FontSize="40" TextDecorations="Underline" Foreground="Black"></TextBlock>
+        <TextBlock Grid.Row="0" Text="Consultar Curses" FontWeight="Bold" FontSize="40" TextDecorations="Underline" Foreground="Black" Margin="10,0,0,0"></TextBlock>
         <Grid Grid.Row="1" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
@@ -59,8 +59,10 @@
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
+
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
@@ -75,7 +77,7 @@
                     <TextBlock x:Name="txbEsportiCategoria" FontSize="15" Text="Running General" Grid.Row="2" Grid.Column="1" Height="30" Margin="10,0,0,0"></TextBlock>
                     <Button x:Name="btnEditarCircuit" Grid.Column="1" Grid.Row="3" Height="30" Width="100" Content="Editar Cricuit" HorizontalAlignment="Left" Margin="10,0,10,10"></Button>
                     <Button x:Name="btnCrearCircuit" Grid.Column="1" Grid.Row="4" Height="30" Width="100" Content="Crear Cricuit" HorizontalAlignment="Left" Margin="10,0,10,10" Click="btnCrearCircuit_Click"></Button>
-                    <ListView x:Name="lsvCircuits" Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" HorizontalAlignment="Center" Margin="0,0,0,10">
+                    <ListView x:Name="lsvCircuits" Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" HorizontalAlignment="Center" Margin="0,0,0,10" SelectionChanged="lsvCircuits_SelectionChanged">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Circuit" DisplayMemberBinding="{Binding Nom}"/>
@@ -84,6 +86,26 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
+                    <Grid Grid.Column="2" Grid.Row="3" Grid.RowSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <DataGrid x:Name="dgKilometresCircuit" Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" AutoGenerateColumns="False" Margin="0,0,0,10" CellEditEnding="dgKilometresCircuit_CellEditEnding">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Km Checkpoint" Binding="{Binding Kilometre}" Width="*"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical" VerticalAlignment="Center">
+                            <Button x:Name="btnCrearKMChk"  Height="30" Width="100" Content="Crear" HorizontalAlignment="Left" Margin="10,0,10,10" Click="btnCrearKMChk_Click"></Button>
+                            <Button x:Name="btnGuardarKMChk"  Height="30" Width="100" Content="Guardar" HorizontalAlignment="Left" Margin="10,0,10,10" Click="btnGuardarKMChk_Click"></Button>
+                            <Button x:Name="btnEliminarKMChk" Height="30" Width="100" Content="Eliminar" HorizontalAlignment="Left" Margin="10,0,10,10" ></Button>
+                        </StackPanel>
+                    </Grid>
                 </Grid>
             </Border>
         </Grid>

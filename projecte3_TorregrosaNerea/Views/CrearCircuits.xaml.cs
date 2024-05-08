@@ -1,8 +1,10 @@
 ﻿using BD_MySQL.Model;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,6 +26,7 @@ namespace projecte3_TorregrosaNerea.Views
     {
         private double widthAnterior;
         private double heightAnterior;
+        private BDCursa cursaActual = null;
         public CrearCircuits()
         {
             InitializeComponent();
@@ -39,14 +42,151 @@ namespace projecte3_TorregrosaNerea.Views
         public CrearCircuits(BDCursa c) : this()
         {
             cboCategoria.ItemsSource = BDCategoria.getCategoriesFromEsport(c.EsportId);
+            cursaActual = c;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            tornarAConusltarCurses();
+        }
+
+        private void btnGuardar_Click(object sender, RoutedEventArgs e)
+        {
+            afegirCircuit();
+        }
+
+        private void txbNom_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (string.IsNullOrEmpty(textBox.Text))
+            {
+                textBox.Background = Brushes.Red;
+                btnGuardar.IsEnabled = false;
+            }
+            else
+            {
+                textBox.Background = Brushes.White;
+                btnGuardar.IsEnabled = true;
+            }
+        }
+
+        private void txbDistancia_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+
+            if (!Utils.EsDouble(textBox.Text) || string.IsNullOrEmpty(textBox.Text))
+            {
+
+                textBox.Background = Brushes.Red;
+                btnGuardar.IsEnabled = false;
+            }
+            else
+            {
+                textBox.Background = Brushes.White;
+                btnGuardar.IsEnabled = true;
+            }
+        }
+
+        private void txbPreu_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+
+            if (!Utils.EsDecimal(textBox.Text) || string.IsNullOrEmpty(textBox.Text))
+            {
+
+                textBox.Background = Brushes.Red;
+                btnGuardar.IsEnabled = false;
+            }
+            else
+            {
+                textBox.Background = Brushes.White;
+                btnGuardar.IsEnabled = true;
+            }
+        }
+
+        private void TextBoxInt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+
+            if (!Utils.EsNumeroEnter(textBox.Text) || string.IsNullOrEmpty(textBox.Text))
+            {
+
+                textBox.Background = Brushes.Red;
+                btnGuardar.IsEnabled = false;
+            }
+            else
+            {
+                textBox.Background = Brushes.White;
+                btnGuardar.IsEnabled = true;
+            }
+        }
+
+        private void txbTempsEstimat_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+
+            if (!Utils.TeFormatHora(textBox.Text) || string.IsNullOrEmpty(textBox.Text))
+            {
+
+                textBox.Background = Brushes.Red;
+                btnGuardar.IsEnabled = false;
+            }
+            else
+            {
+                textBox.Background = Brushes.White;
+                btnGuardar.IsEnabled = true;
+            }
+        }
+        public void afegirCircuit()
+        {
+            string nom = txbNom.Text;
+            int categoriaId = 0;
+            if (cboCategoria.SelectedItem != null)
+            {
+                BDCategoria e = cboCategoria.SelectedItem as BDCategoria;
+                categoriaId = e.Id;
+            }
+
+            int numero = Int32.Parse(txbNumero.Text);
+            double distancia = Double.Parse(txbDistancia.Text);
+            decimal preu = Decimal.Parse(txbPreu.Text);
+            DateTime tempsEstimat = aconseguirTempsEstimat(txbTempsEstimat.Text);
+
+            BDCircuit ci = new BDCircuit(cursaActual.Id,numero,distancia,nom,preu,tempsEstimat);
+            bool ok = BDCircuit.insertCircuit(ci);
+            
+            if (ok)
+            {
+                int idUltimCircuit = BDCircuit.ObtenirUltimCircuitId();
+                BDCircuitCategoria.insertCircuitCategoria(categoriaId, idUltimCircuit);
+                MessageBox.Show("Circuit inserit correctament.");
+                tornarAConusltarCurses();
+
+            }
+            else
+            {
+                MessageBox.Show("No s'ha pogut inserir el circuit.");
+            }
+            
+        }
+
+        private DateTime aconseguirTempsEstimat(string text)
+        {
+            TimeSpan intervalTemps = TimeSpan.ParseExact(text, "hh\\:mm\\:ss", CultureInfo.InvariantCulture);
+            DateTime dataAvui = DateTime.Now.Date;
+            return dataAvui.Add(intervalTemps);
+
+        }
+
+        private void tornarAConusltarCurses()
         {
             MainWindow.mainWindow.MaxHeight = heightAnterior;
             MainWindow.mainWindow.MaxWidth = widthAnterior;
             Application.Current.MainWindow.WindowState = WindowState.Maximized;
             MainWindow.navigationFrame.Navigate(new ConsultarCurses());
         }
+
+
+
     }
 }

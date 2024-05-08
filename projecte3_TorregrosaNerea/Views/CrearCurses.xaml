@@ -15,7 +15,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="0.2*"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="Creació Curses" FontWeight="Bold" FontSize="40" TextDecorations="Underline" Foreground="Black"></TextBlock>
+        <TextBlock Grid.Row="0" Text="Creació Curses" FontWeight="Bold" FontSize="40" TextDecorations="Underline" Foreground="Black" Margin="10,0,0,0"></TextBlock>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
