@@ -11,7 +11,7 @@ namespace projecte3_TorregrosaNerea
     {
         public static bool EsNumeroEnter(string text)
         {
-            if (int.TryParse(text, out _))
+            if (int.TryParse(text, out int numero) && numero >=0)
             {
                 return true;
             }
@@ -23,14 +23,26 @@ namespace projecte3_TorregrosaNerea
 
         public static bool EsDecimal(string valor)
         {
-            decimal resultat;
-            return decimal.TryParse(valor, out resultat);
+            if (decimal.TryParse(valor, out decimal resultat) && resultat >= 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public static bool EsDouble(string valor)
         {
-            double resultat;
-            return double.TryParse(valor, out resultat);
+            if (double.TryParse(valor, out double resultat) && resultat >= 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public static bool TeFormatHora(string valor)

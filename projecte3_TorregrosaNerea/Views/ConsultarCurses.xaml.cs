@@ -218,17 +218,46 @@ namespace projecte3_TorregrosaNerea.Views
 
         private void afegirKilometreACircuit()
         {
-            bool ok = BDCheckpoints.insertCheckpoint(checkpointEditat);
-            if (ok)
-            {
-                MessageBox.Show("Kilòmetre inserit correctament.");
-                mostrarCheckpointsCursa();
+            if (comprovarValorGridCheckpoints()) { 
+                btnGuardarKMChk.IsEnabled = true;
+                btnCrearKMChk.IsEnabled = true;
+                bool ok = BDCheckpoints.insertCheckpoint(checkpointEditat);
+                if (ok)
+                {
+                    MessageBox.Show("Kilòmetre inserit correctament.");
+                    mostrarCheckpointsCursa();
 
+                }
+                else
+                {
+                    MessageBox.Show("No s'ha pogut inserir el kilòmetre.");
+                }
             }
             else
             {
-                MessageBox.Show("No s'ha pogut inserir el kilòmetre.");
+                btnGuardarKMChk.IsEnabled = false;
+                btnCrearKMChk.IsEnabled = false;
             }
+        }
+
+        private bool comprovarValorGridCheckpoints()
+        {
+            foreach (var item in dgKilometresCircuit.Items)
+            {
+                var row = (DataGridRow)dgKilometresCircuit.ItemContainerGenerator.ContainerFromItem(item);
+                if (row != null && Validation.GetHasError(row))
+                {
+                    MessageBox.Show("El kilòmetres introduït ha de ser numèric", "Afegir Kilòmetre", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return false;
+                    break;
+                    
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
 
