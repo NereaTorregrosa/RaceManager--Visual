@@ -108,21 +108,28 @@ namespace projecte3_TorregrosaNerea.Views
             }
             else
             {
-                BDCursa c = new BDCursa(nom,dataInici,dataFi,lloc,esportId,1,descripcio,limitInscripcions,urlFoto,urlWeb);
-                bool ok = BDCursa.insertCursa(c);
-                if(ok)
+                bool dataOk = Utils.EsDataFutura(dataInici,dataFi);
+                if(dataOk)
                 {
-                    MessageBox.Show("Cursa inserida correctament.");
-                    MainWindow.navigationFrame.Navigate(new ConsultarCurses());
+                    BDCursa c = new BDCursa(nom, dataInici, dataFi, lloc, esportId, 1, descripcio, limitInscripcions, urlFoto, urlWeb);
+                    bool ok = BDCursa.insertCursa(c);
+                    if (ok)
+                    {
+                        MessageBox.Show("Cursa inserida correctament.");
+                        MainWindow.navigationFrame.Navigate(new ConsultarCurses());
+                    }
+                    else
+                    {
+                        MessageBox.Show("No s'ha pogut inserir la cursa.");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("No s'ha pogut inserir la cursa.");
+                    MessageBox.Show("Data Fi no pot ser anterior a Data Inici.");
                 }
+                
             }
             
-             
-
         }
 
         public async void elegirFoto()

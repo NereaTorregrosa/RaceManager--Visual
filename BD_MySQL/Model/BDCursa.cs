@@ -81,7 +81,8 @@ namespace BD_MySQL.Model
                         DBUtils.createParam(consulta,"id_estat",idEstat,System.Data.DbType.Int32);
                         consulta.CommandText = @"select * from curses  where 
                                     ((cur_nom like @nom) or (cur_lloc like @nom)) and 
-                                    ( cur_data_inici>=@data_inici) and (@id_estat = 0 or  cur_est_id = @id_estat) ";
+                                    ( cur_data_inici>=@data_inici) and (@id_estat = 0 or  cur_est_id = @id_estat) 
+                                    order by cur_data_inici asc";
 
                         DbDataReader reader = consulta.ExecuteReader();
                         List<BDCursa> curses = new List<BDCursa>();
@@ -158,6 +159,64 @@ namespace BD_MySQL.Model
                         return false;
                     }
 
+                }
+            }
+        }
+
+        public static bool updateCursa(BDCursa c)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+
+                    // Comencem una transacció dins de la que volem executar updates
+                    DbTransaction transaccio = connexio.BeginTransaction();
+
+                    using (var consulta = connexio.CreateCommand())
+                    {
+                        consulta.Transaction = transaccio; // Associem la consulta a la transacció
+
+                        DBUtils.createParam(consulta, "nom", c.Nom, System.Data.DbType.String);
+                        DBUtils.createParam(consulta, "data_inici", c.dataInici, System.Data.DbType.DateTime);
+                        DBUtils.createParam(consulta, "data_fi", c.DataFi, System.Data.DbType.DateTime);
+                        DBUtils.createParam(consulta, "lloc", c.Lloc, System.Data.DbType.String);
+                        DBUtils.createParam(consulta, "esportId", c.EsportId, System.Data.DbType.Int32);
+                        DBUtils.createParam(consulta, "estatId", c.EstatId, System.Data.DbType.Int32);
+                        DBUtils.createParam(consulta, "descripcio", c.Descripcio, System.Data.DbType.String);
+                        DBUtils.createParam(consulta, "limit_insc", c.LimitInscripcions, System.Data.DbType.Int32);
+                        DBUtils.createParam(consulta, "url_foto", c.UrlFoto, System.Data.DbType.String);
+                        DBUtils.createParam(consulta, "url_web", c.UrlWeb, System.Data.DbType.String);
+                        DBUtils.createParam(consulta, "id", c.Id, System.Data.DbType.Int32);
+
+                        consulta.CommandText =
+                            @"update curses set                             
+                                cur_nom                  = @nom,
+                                cur_data_inici           = @data_inici,
+                                cur_data_fi              = @data_fi,
+                                cur_lloc                 = @lloc,
+                                cur_esp_id               = @esportId,
+                                cur_est_id               = @estatId,
+                                cur_desc                 = @descripcio,
+                                cur_limit_inscr          = @limit_insc,
+                                cur_foto                 = @url_foto,
+                                cur_web                  = @url_web
+                                where
+                                    cur_id      = @id
+                                ";
+                        int filesModificades = consulta.ExecuteNonQuery();
+                        if (filesModificades != 1)
+                        {
+                            transaccio.Rollback();
+                            return false;
+                        }
+                        else
+                        {
+                            transaccio.Commit();
+                            return true;
+                        }
+                    }
                 }
             }
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -50,6 +51,25 @@ namespace projecte3_TorregrosaNerea
             string patro = @"^\d{2}:\d{2}:\d{2}$";
 
             return Regex.IsMatch(valor, patro);
+        }
+
+        public static bool EsDataFutura(DateTime data1, DateTime data12)
+        {
+
+            return data12.CompareTo(data1) > 0;
+        }
+
+        public static string convertirDateTimeAString(DateTime d) 
+        {
+           return d.ToString("HH:mm:ss");
+        }
+
+        public static  DateTime aconseguirTempsEstimat(string text)
+        {
+            TimeSpan intervalTemps = TimeSpan.ParseExact(text, "hh\\:mm\\:ss", CultureInfo.InvariantCulture);
+            DateTime dataAvui = DateTime.Now.Date;
+            return dataAvui.Add(intervalTemps);
+
         }
     }
 }

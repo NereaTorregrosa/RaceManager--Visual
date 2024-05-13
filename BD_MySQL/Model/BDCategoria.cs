@@ -51,7 +51,7 @@ namespace BD_MySQL.Model
             }
         }
 
-        public static string getCategoriaById(int id)
+        public static BDCategoria getCategoriaById(int id)
         {
             using (var context = new MySqlDbContext())
             {
@@ -62,17 +62,26 @@ namespace BD_MySQL.Model
                     {
                         DBUtils.createParam(consulta, "id", id, System.Data.DbType.Int32);
 
-                        consulta.CommandText = @"select cat_nom from categories where cat_id = @id";
+                        consulta.CommandText = @"select * from categories where cat_id = @id";
                         DbDataReader reader = consulta.ExecuteReader();
-                        string nomCategoria = "";
+                        BDCategoria c = null;
+                        
                         while (reader.Read())
                         {
-                            nomCategoria = reader.GetString(reader.GetOrdinal("cat_nom"));
+                            string nomCategoria = reader.GetString(reader.GetOrdinal("cat_nom"));
+                            int esport = reader.GetInt32(reader.GetOrdinal("cat_esp_id"));
+                            c = new BDCategoria(id, esport,nomCategoria);
                         }
-                        return nomCategoria;
+                        return c;
                     }
                 }
             }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is BDCategoria categoria &&
+                   Nom == categoria.Nom;
         }
     }
 }

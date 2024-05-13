@@ -95,5 +95,61 @@ namespace BD_MySQL.Model
                 }
             }
         }
+
+        public static bool CheckpointExists(int circuitId, double kilometre)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+                    using (var consulta = connexio.CreateCommand())
+                    {
+                        DBUtils.createParam(consulta, "circuitId", circuitId, System.Data.DbType.Int32);
+                        DBUtils.createParam(consulta, "kilometre", kilometre, System.Data.DbType.Double);
+                        consulta.CommandText = @"select count(*) from checkpoints where chk_cir_id = @circuitId and chk_km = @kilometre";
+                        int count = Convert.ToInt32(consulta.ExecuteScalar());
+                        return count > 0;
+                    }
+                }
+            }
+        }
+
+        public static bool UpdateCheckpoint(BDCheckpoints c)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+
+                    connexio.Open();
+
+                    DbTransaction transaccio = connexio.BeginTransaction();
+
+                    using (var consulta = context.Database.GetDbConnection().CreateCommand())
+                    {
+
+                        DBUtils.createParam(consulta, "newKilometre", c.kilometre, System.Data.DbType.Double);
+                        DBUtils.createParam(consulta, "newCircuitId", c.IdCircuit, System.Data.DbType.Int32);
+                        DBUtils.createParam(consulta, "checkpointId", c.Id, System.Data.DbType.Int32);
+                        consulta.CommandText = @"UPDATE checkpoints SET 
+                                        chk_km = @newKilometre, 
+                                        chk_cir_id = @newCircuitId 
+                                        WHERE chk_id = @checkpointId";
+                        int filesModificades = consulta.ExecuteNonQuery();
+                        if (filesModificades != 1)
+                        {
+                            transaccio.Rollback();
+                            return false;
+                        }
+                        else
+                        {
+                            transaccio.Commit();
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

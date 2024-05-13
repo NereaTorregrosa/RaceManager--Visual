@@ -1,6 +1,7 @@
 ﻿using BD_MySQL;
 using BD_MySQL.Model;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -133,7 +134,25 @@ namespace projecte3_TorregrosaNerea.Views
 
         private void btnGuardarKMChk_Click(object sender, RoutedEventArgs e)
         {
-            afegirKilometreACircuit();
+            if (BDCheckpoints.CheckpointExists(checkpointEditat.IdCircuit, checkpointEditat.Kilometre))
+            {
+                bool ok = BDCheckpoints.UpdateCheckpoint(checkpointEditat);
+                if (ok)
+                {
+                    MessageBox.Show("Kilòmetre editat correctament.");
+                    mostrarCheckpointsCursa();
+
+                }
+                else
+                {
+                    MessageBox.Show("No s'ha pogut editar el kilòmetre.");
+                }
+            }
+            else
+            {
+                afegirKilometreACircuit();
+            }
+            
         }
 
 
@@ -144,6 +163,30 @@ namespace projecte3_TorregrosaNerea.Views
             checkpointEditat.IdCircuit = circuitSeleccionat.Id;
 
         }
+
+        private void btnEditarCursa_Click(object sender, RoutedEventArgs e)
+        {
+            if(dgCurses.SelectedItem != null)
+            {
+                BDCursa cursaSeleccionada = dgCurses.SelectedItem as BDCursa;
+                if(cursaSeleccionada.EstatId == 1)
+                {
+                    btnEditarCursa.IsEnabled = true;
+                    MainWindow.navigationFrame.Navigate(new EditarCursa(cursaSeleccionada));
+                }
+            }
+        }
+
+        private void btnEditarCircuit_Click(object sender, RoutedEventArgs e)
+        {
+            if(lsvCircuits.SelectedItem != null)
+            {
+                BDCircuit circuitActual = lsvCircuits.SelectedItem as BDCircuit;
+                MainWindow.navigationFrame.Navigate(new EditarCircuits(obtenirFilesGridCheckpoints(), circuitActual,cursaSeleccionada));
+            }
+            
+        }
+        #region Mètodes
         public void omplirCboFiltreiInicialitzarRB()
         {
             cboFiltre.Items.Clear();
@@ -196,7 +239,7 @@ namespace projecte3_TorregrosaNerea.Views
             txbNomCursa.Text = cursaSeleccionada.Nom.ToUpper();
             txbDataCursa.Text = cursaSeleccionada.DataInici.ToString("dd/MM/yyyy");
             txbLlocCursa.Text = cursaSeleccionada.Lloc.ToUpper();
-            txbEsportiCategoria.Text = BDEsport.getEsportById(cursaSeleccionada.EsportId).ToUpper();
+            txbEsportiCategoria.Text = BDEsport.getEsportById(cursaSeleccionada.EsportId).Nom.ToUpper();
             txbEstatCursa.Text = BDEstat.getEstatById(cursaSeleccionada.EstatId).ToUpper();
             txbNumInscritsiLimit.Text = cursaSeleccionada.LimitInscripcions.ToString();
             BitmapImage bitmapImage = new BitmapImage(new Uri(cursaSeleccionada.UrlFoto));
@@ -260,6 +303,16 @@ namespace projecte3_TorregrosaNerea.Views
             return false;
         }
 
-
+        private int obtenirFilesGridCheckpoints()
+        {
+            
+            var sourceCollection = dgKilometresCircuit.ItemsSource as IEnumerable;
+            if (sourceCollection != null)
+            {
+                return sourceCollection.Cast<object>().Count();
+            }
+            else return 0;
+        }
+        #endregion
     }
 }

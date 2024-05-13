@@ -75,7 +75,7 @@
                     </StackPanel>
                     <TextBlock x:Name="txbNomCursa" FontSize="15" Text="Cursa del pa amb tomàquet" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="0" Height="30" Margin="10,0,0,0"></TextBlock>
                     <TextBlock x:Name="txbEsportiCategoria" FontSize="15" Text="Running General" Grid.Row="2" Grid.Column="1" Height="30" Margin="10,0,0,0"></TextBlock>
-                    <Button x:Name="btnEditarCircuit" Grid.Column="1" Grid.Row="3" Height="30" Width="100" Content="Editar Cricuit" HorizontalAlignment="Left" Margin="10,0,10,10"></Button>
+                    <Button x:Name="btnEditarCircuit" Grid.Column="1" Grid.Row="3" Height="30" Width="100" Content="Editar Cricuit" HorizontalAlignment="Left" Margin="10,0,10,10" Click="btnEditarCircuit_Click"></Button>
                     <Button x:Name="btnCrearCircuit" Grid.Column="1" Grid.Row="4" Height="30" Width="100" Content="Crear Cricuit" HorizontalAlignment="Left" Margin="10,0,10,10" Click="btnCrearCircuit_Click"></Button>
                     <ListView x:Name="lsvCircuits" Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" HorizontalAlignment="Center" Margin="0,0,0,10" SelectionChanged="lsvCircuits_SelectionChanged">
                         <ListView.View>
@@ -116,7 +116,7 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button x:Name="btnCrearCursa" Grid.Column="1" Height="30" Width="100" Content="Crear Cursa" HorizontalAlignment="Left" Margin="0,0,10,0" Click="btnCrearCursa_Click"></Button>
-            <Button x:Name="btnEditarCursa" Grid.Column="1" Height="30" Width="100" Content="Editar Cursa" HorizontalAlignment="Right" Margin="0,0,10,0"></Button>
+            <Button x:Name="btnEditarCursa" Grid.Column="1" Height="30" Width="100" Content="Editar Cursa" HorizontalAlignment="Right" Margin="0,0,10,0" Click="btnEditarCursa_Click"></Button>
         </Grid>
     </Grid>
 </Page>

@@ -56,3 +56,7 @@ C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNe
 C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\projecte3_TorregrosaNerea.csproj.CopyComplete
 C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\Views\CrearCircuits.g.cs
 C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\Views\CrearCircuits.baml
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\Views\EditarCursa.g.cs
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\Views\EditarCursa.baml
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\Views\EditarCircuits.g.cs
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\Views\EditarCircuits.baml

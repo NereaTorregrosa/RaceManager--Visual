@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\App.xaml
-5-796298483
+71747573544
 
-9-1493538982
+11-1105775181
 224877977547
-MainWindow.xaml;Views\ConsultarCurses.xaml;Views\CrearCircuits.xaml;Views\CrearCurses.xaml;Views\Login.xaml;
+MainWindow.xaml;Views\ConsultarCurses.xaml;Views\CrearCircuits.xaml;Views\CrearCurses.xaml;Views\EditarCircuits.xaml;Views\EditarCursa.xaml;Views\Login.xaml;
 
 False
 

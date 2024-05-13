@@ -47,7 +47,7 @@ namespace BD_MySQL.Model
             }
         }
 
-        public static string getEsportById(int id)
+        public static BDEsport getEsportById(int id)
         {
             using (var context = new MySqlDbContext())
             {
@@ -58,17 +58,25 @@ namespace BD_MySQL.Model
                     {
                         DBUtils.createParam(consulta, "id", id, System.Data.DbType.Int32);
 
-                        consulta.CommandText = @"select esp_nom from esports where esp_id = @id";
+                        consulta.CommandText = @"select * from esports where esp_id = @id";
                         DbDataReader reader = consulta.ExecuteReader();
-                        string nomEsport = "";
+                        BDEsport esport = null;
                         while (reader.Read())
                         {
-                            nomEsport = reader.GetString(reader.GetOrdinal("esp_nom"));
+                            string nom = reader.GetString(reader.GetOrdinal("esp_nom"));
+                            esport = new BDEsport(id, nom);
                         }
-                        return nomEsport;
+
+                        return esport;
                     }
                 }
             }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is BDEsport esport &&
+                   Nom == esport.Nom;
         }
     }
 }

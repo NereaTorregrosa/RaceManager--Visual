@@ -150,7 +150,7 @@ namespace projecte3_TorregrosaNerea.Views
             int numero = Int32.Parse(txbNumero.Text);
             double distancia = Double.Parse(txbDistancia.Text);
             decimal preu = Decimal.Parse(txbPreu.Text);
-            DateTime tempsEstimat = aconseguirTempsEstimat(txbTempsEstimat.Text);
+            DateTime tempsEstimat = Utils.aconseguirTempsEstimat(txbTempsEstimat.Text);
 
             BDCircuit ci = new BDCircuit(cursaActual.Id,numero,distancia,nom,preu,tempsEstimat);
             bool ok = BDCircuit.insertCircuit(ci);
@@ -170,13 +170,6 @@ namespace projecte3_TorregrosaNerea.Views
             
         }
 
-        private DateTime aconseguirTempsEstimat(string text)
-        {
-            TimeSpan intervalTemps = TimeSpan.ParseExact(text, "hh\\:mm\\:ss", CultureInfo.InvariantCulture);
-            DateTime dataAvui = DateTime.Now.Date;
-            return dataAvui.Add(intervalTemps);
-
-        }
 
         private void tornarAConusltarCurses()
         {

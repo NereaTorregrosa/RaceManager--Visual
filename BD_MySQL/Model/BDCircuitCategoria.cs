@@ -49,7 +49,7 @@ namespace BD_MySQL.Model
                         {
                             idCategoria = reader.GetInt32(reader.GetOrdinal("ccc_cat_id"));
                         }
-                       
+
                         return idCategoria;
                     }
                 }
@@ -89,6 +89,43 @@ namespace BD_MySQL.Model
                         return false;
                     }
 
+                }
+            }
+        }
+
+        public static bool deleteCircuitCategoria(int circuitId)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+
+                    // Comencem una transacció dins de la que volem executar updates
+                    DbTransaction transaccio = connexio.BeginTransaction();
+
+                    using (var consulta = connexio.CreateCommand())
+                    {
+                        consulta.Transaction = transaccio; // Associem la consulta a la transacció
+
+                        // Ajusta la consulta para realizar la eliminación
+                        DBUtils.createParam(consulta, "id", circuitId, System.Data.DbType.Int32);
+                        consulta.CommandText = @"DELETE FROM circuits_categories WHERE ccc_cir_id = @id";
+
+                        int rowsAffected = consulta.ExecuteNonQuery();
+
+                        if (rowsAffected != 1)
+                        {
+                            transaccio.Rollback();
+                            return false;
+                        }
+                        else
+                        {
+                            //UpdatePilotsTeamIdToZero(teamId, transaccio);
+                            transaccio.Commit();
+                            return true;
+                        }
+                    }
                 }
             }
         }
