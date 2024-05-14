@@ -13,6 +13,7 @@ namespace BD_MySQL.Model
         private int id;
         private double kilometre;
         private int idCircuit;
+        private BDCheckpoints checkpointNou;
 
         public BDCheckpoints()
         {
@@ -29,9 +30,16 @@ namespace BD_MySQL.Model
             Kilometre = kilometre;
             IdCircuit = idCircuit;
         }
+
         public int Id { get => id; set => id = value; }
         public double Kilometre { get => kilometre; set => kilometre = value; }
         public int IdCircuit { get => idCircuit; set => idCircuit = value; }
+        public BDCheckpoints CheckpointNou { get => checkpointNou; set => checkpointNou = value; }
+
+        public BDCheckpoints Clone()
+        {
+            return new BDCheckpoints(Id, Kilometre, IdCircuit);
+        }
 
         public static OC<BDCheckpoints> getCheckpointsFromCircuit(int idCircuit)
         {
@@ -150,6 +158,41 @@ namespace BD_MySQL.Model
                     }
                 }
             }
+        }
+
+        public static void deleteCheckpoints(int circuitId)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+
+                    // Comencem una transacció dins de la que volem executar updates
+                    DbTransaction transaccio = connexio.BeginTransaction();
+
+                    using (var consulta = connexio.CreateCommand())
+                    {
+                        consulta.Transaction = transaccio; // Associem la consulta a la transacció
+
+                        DBUtils.createParam(consulta, "id", circuitId, System.Data.DbType.Int32);
+                        consulta.CommandText = @"DELETE FROM checkpoints WHERE chk_cir_id = @id";
+
+                        int rowsAffected = consulta.ExecuteNonQuery();
+
+                        if (rowsAffected <=0)
+                        {
+                            transaccio.Rollback();
+                        }
+                        else
+                        {
+                            transaccio.Commit();
+                        }
+                    }
+                }
+            }
+
+
         }
     }
 }

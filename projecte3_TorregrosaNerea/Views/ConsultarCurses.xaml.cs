@@ -27,7 +27,9 @@ namespace projecte3_TorregrosaNerea.Views
         private BDCursa cursaSeleccionada;
         private OC<BDCheckpoints> checkpoints;
         private BDCheckpoints checkpointEditat;
+        private BDCheckpoints checkpointClonat;
         private BDCircuit circuitSeleccionat;
+        private BDCheckpoints checkpointAbansEditar;
         public ConsultarCurses()
         {
             InitializeComponent();
@@ -78,7 +80,16 @@ namespace projecte3_TorregrosaNerea.Views
                 btnEditarCircuit.IsEnabled = true;
                 btnCrearCircuit.IsEnabled = true;
                 btnEditarCursa.IsEnabled = true;
+                btnEliminarCursa.IsEnabled = true;
                 mostrarDetallCursa();
+                if (cursaSeleccionada.EstatId == 1)
+                {
+                    btnObrirInscripcioCursa.IsEnabled = true;
+                }
+                else
+                {
+                    btnObrirInscripcioCursa.IsEnabled = false;
+                }
             }
         }
 
@@ -134,18 +145,22 @@ namespace projecte3_TorregrosaNerea.Views
 
         private void btnGuardarKMChk_Click(object sender, RoutedEventArgs e)
         {
-            if (BDCheckpoints.CheckpointExists(checkpointEditat.IdCircuit, checkpointEditat.Kilometre))
+            Console.WriteLine("Hola");
+            if(checkpointClonat != null)
             {
-                bool ok = BDCheckpoints.UpdateCheckpoint(checkpointEditat);
-                if (ok)
+                if (BDCheckpoints.CheckpointExists(checkpointClonat.IdCircuit, checkpointClonat.Kilometre))
                 {
-                    MessageBox.Show("Kilòmetre editat correctament.");
-                    mostrarCheckpointsCursa();
+                    bool ok = BDCheckpoints.UpdateCheckpoint(checkpointEditat);
+                    if (ok)
+                    {
+                        MessageBox.Show("Kilòmetre editat correctament.");
+                        mostrarCheckpointsCursa();
 
-                }
-                else
-                {
-                    MessageBox.Show("No s'ha pogut editar el kilòmetre.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("No s'ha pogut editar el kilòmetre.");
+                    }
                 }
             }
             else
@@ -186,6 +201,42 @@ namespace projecte3_TorregrosaNerea.Views
             }
             
         }
+
+        private void dgKilometresCircuit_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Console.WriteLine("Hola");
+            if (dgKilometresCircuit.SelectedItem != null)
+            {
+                DataGridRow row = (DataGridRow)dgKilometresCircuit.ItemContainerGenerator.ContainerFromItem(dgKilometresCircuit.SelectedItem); ;
+                if (IsRowEmpty(row))
+                {
+                    checkpointAbansEditar = (BDCheckpoints)dgKilometresCircuit.SelectedItem;
+                    checkpointClonat = checkpointAbansEditar.Clone();
+                }
+                
+            }
+        }
+
+        private void btnObrirInscripcioCursa_Click(object sender, RoutedEventArgs e)
+        {
+
+            cursaSeleccionada.EstatId = 3;
+            bool ok = BDCursa.updateCursa(cursaSeleccionada);
+            if (ok)
+            {
+                MessageBox.Show("Estat de la cursa modificat correctament.");
+                grdDetallCursa.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                MessageBox.Show("No s'ha pogut canviar l'estat de la cursa.");
+            }
+        }
+
+        private void btnEliminarCursa_Click(object sender, RoutedEventArgs e)
+        {
+            confirmarEliminarCursa();
+        }
         #region Mètodes
         public void omplirCboFiltreiInicialitzarRB()
         {
@@ -204,6 +255,8 @@ namespace projecte3_TorregrosaNerea.Views
             btnCrearKMChk.IsEnabled = false;
             btnGuardarKMChk.IsEnabled = false;
             btnEliminarKMChk.IsEnabled = false;
+            btnObrirInscripcioCursa.IsEnabled = false;
+            btnEliminarCursa.IsEnabled = false;
         }
 
         private void launchGetCurses()
@@ -313,6 +366,36 @@ namespace projecte3_TorregrosaNerea.Views
             }
             else return 0;
         }
+
+        private bool IsRowEmpty(DataGridRow row)
+        {
+            return row.Item == null;
+        }
+
+
+        private void confirmarEliminarCursa()
+        {
+            MessageBoxResult result = MessageBox.Show("¿Estás segur de que vols eliminar la cursa?", "Confirmació d'eliminació de cursa", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                bool ok = BDCursa.deleteCursa(cursaSeleccionada.Id,cursaSeleccionada);
+                if (ok) {
+                    MessageBox.Show("Cursa eliminada correctament.");
+                    launchGetCurses();
+                    grdDetallCursa.Visibility = Visibility.Collapsed;
+
+                }
+                else
+                {
+                    MessageBox.Show("No s'ha pogut eliminar la cursa: " + cursaSeleccionada.ErrorEliminar);
+                }
+            }
+        }
+
+
         #endregion
+
+
     }
 }

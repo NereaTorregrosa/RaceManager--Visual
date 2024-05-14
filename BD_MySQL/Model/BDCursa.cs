@@ -21,6 +21,7 @@ namespace BD_MySQL.Model
         private int limitInscripcions;
         private string urlFoto;
         private string urlWeb;
+        private string errorEliminar;
 
         public BDCursa(int id, string nom, DateTime dataInici, DateTime dataFi, string lloc, int esportId, int estatId, string descripcio, int limitInscripcions, string urlFoto, string urlWeb)
         {
@@ -62,7 +63,7 @@ namespace BD_MySQL.Model
         public int LimitInscripcions { get => limitInscripcions; set => limitInscripcions = value; }
         public string UrlFoto { get => urlFoto; set => urlFoto = value; }
         public string UrlWeb { get => urlWeb; set => urlWeb = value; }
-
+        public  string ErrorEliminar { get => errorEliminar; set => errorEliminar = value; }
 
         public static List<BDCursa> getCurses(String mNom = "", DateTime? dt = null, int? idEstat = null)
         {
@@ -219,6 +220,59 @@ namespace BD_MySQL.Model
                     }
                 }
             }
+        }
+
+        public static bool deleteCursa(int cursaId,BDCursa c)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+
+                    // Comencem una transacció dins de la que volem executar updates
+                    DbTransaction transaccio = connexio.BeginTransaction();
+                    try
+                    {
+                        using (var consulta = connexio.CreateCommand())
+                        {
+                            consulta.Transaction = transaccio; // Associem la consulta a la transacció
+
+                            DBUtils.createParam(consulta, "id", cursaId, System.Data.DbType.Int32);
+                            consulta.CommandText = @"DELETE FROM curses WHERE cur_id = @id";
+
+                            List<BDCircuit> circuitsCursa = BDCircuit.getCircuitsFromCursa(cursaId);
+                            foreach (var circuit in circuitsCursa)
+                            {
+                                BDCircuitCategoria.deleteCircuitCategoria(circuit.Id);
+                                BDCheckpoints.deleteCheckpoints(circuit.Id);
+                            }
+                            BDCircuit.deleteCircuits(cursaId);
+                            int rowsAffected = consulta.ExecuteNonQuery();
+
+                            if (rowsAffected != 1)
+                            {
+                                transaccio.Rollback();
+                                return false;
+                            }
+                            else
+                            {
+                                transaccio.Commit();
+                                return true;
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        c.ErrorEliminar = ex.ToString();
+                        transaccio.Rollback();
+                        return false;
+                    }
+
+                }
+            }
+
+
         }
     }
 }

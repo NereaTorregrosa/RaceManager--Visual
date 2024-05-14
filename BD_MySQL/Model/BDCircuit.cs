@@ -204,5 +204,40 @@ namespace BD_MySQL.Model
                 }
             }
         }
+
+        public static void deleteCircuits(int cursaId)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+
+                    // Comencem una transacció dins de la que volem executar updates
+                    DbTransaction transaccio = connexio.BeginTransaction();
+
+                    using (var consulta = connexio.CreateCommand())
+                    {
+                        consulta.Transaction = transaccio; // Associem la consulta a la transacció
+
+                        DBUtils.createParam(consulta, "id", cursaId, System.Data.DbType.Int32);
+                        consulta.CommandText = @"DELETE FROM circuits WHERE cir_cur_id = @id";
+
+                        int rowsAffected = consulta.ExecuteNonQuery();
+
+                        if (rowsAffected <=0)
+                        {
+                            transaccio.Rollback();
+                        }
+                        else
+                        {
+                            transaccio.Commit();
+                        }
+                    }
+                }
+            }
+
+
+        }
     }
 }

@@ -121,7 +121,6 @@ namespace BD_MySQL.Model
                         }
                         else
                         {
-                            //UpdatePilotsTeamIdToZero(teamId, transaccio);
                             transaccio.Commit();
                             return true;
                         }
