@@ -74,24 +74,9 @@ namespace projecte3_TorregrosaNerea.Views
 
         private void dgCurses_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(dgCurses.SelectedItem != null)
-            {
-                grdDetallCursa.Visibility = Visibility.Visible;
-                btnEditarCircuit.IsEnabled = true;
-                btnCrearCircuit.IsEnabled = true;
-                btnEditarCursa.IsEnabled = true;
-                btnEliminarCursa.IsEnabled = true;
-                mostrarDetallCursa();
-                if (cursaSeleccionada.EstatId == 1)
-                {
-                    btnObrirInscripcioCursa.IsEnabled = true;
-                }
-                else
-                {
-                    btnObrirInscripcioCursa.IsEnabled = false;
-                }
-            }
+            activarDesactivarBotons();
         }
+
 
         private void btnCrearCursa_Click(object sender, RoutedEventArgs e)
         {
@@ -235,8 +220,13 @@ namespace projecte3_TorregrosaNerea.Views
 
         private void btnEliminarCursa_Click(object sender, RoutedEventArgs e)
         {
-            confirmarEliminarCursa();
+            confirmarEliminarCursa();    
         }
+        private void btnCancelarCursa_Click(object sender, RoutedEventArgs e)
+        {
+            confirmarCancelarCursa();
+        }
+
         #region Mètodes
         public void omplirCboFiltreiInicialitzarRB()
         {
@@ -257,6 +247,9 @@ namespace projecte3_TorregrosaNerea.Views
             btnEliminarKMChk.IsEnabled = false;
             btnObrirInscripcioCursa.IsEnabled = false;
             btnEliminarCursa.IsEnabled = false;
+            btnTancarInscripcionsCursa.IsEnabled = false;
+            btnCancelarCursa.IsEnabled = false;
+            btnIniciarCursa.IsEnabled = false;
         }
 
         private void launchGetCurses()
@@ -288,13 +281,13 @@ namespace projecte3_TorregrosaNerea.Views
         private void mostrarDetallCursa()
         {
             cursaSeleccionada = dgCurses.SelectedItem as BDCursa;
-
+            int numParticipants = BDCursa.getParticipantsCursa(cursaSeleccionada.Id);
             txbNomCursa.Text = cursaSeleccionada.Nom.ToUpper();
             txbDataCursa.Text = cursaSeleccionada.DataInici.ToString("dd/MM/yyyy");
             txbLlocCursa.Text = cursaSeleccionada.Lloc.ToUpper();
             txbEsportiCategoria.Text = BDEsport.getEsportById(cursaSeleccionada.EsportId).Nom.ToUpper();
             txbEstatCursa.Text = BDEstat.getEstatById(cursaSeleccionada.EstatId).ToUpper();
-            txbNumInscritsiLimit.Text = cursaSeleccionada.LimitInscripcions.ToString();
+            txbNumInscritsiLimit.Text = numParticipants.ToString()+"/"+cursaSeleccionada.LimitInscripcions.ToString()+ " participants";
             BitmapImage bitmapImage = new BitmapImage(new Uri(cursaSeleccionada.UrlFoto));
             imgCursa.Source = bitmapImage;
 
@@ -393,6 +386,80 @@ namespace projecte3_TorregrosaNerea.Views
             }
         }
 
+        private void confirmarCancelarCursa()
+        {
+            MessageBoxResult result = MessageBox.Show("¿Estás segur de que vols cancel·lar la cursa?", "Confirmació de cancel·lació de cursa", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                cursaSeleccionada.EstatId = 4;
+                bool ok = BDCursa.updateCursa(cursaSeleccionada);
+                if (ok)
+                {
+                    MessageBox.Show("Estat de la cursa canviat correctament.");
+                    launchGetCurses();
+                    grdDetallCursa.Visibility = Visibility.Collapsed;
+
+                }
+                else
+                {
+                    MessageBox.Show("No s'ha pogut canviar l'estat de la cursa: ");
+                }
+            }
+        }
+
+        private void activarDesactivarBotons()
+        {
+            if (dgCurses.SelectedItem != null)
+            {
+                grdDetallCursa.Visibility = Visibility.Visible;
+
+                mostrarDetallCursa();
+                if (cursaSeleccionada.EstatId == 1)
+                {
+                    btnObrirInscripcioCursa.IsEnabled = true;
+                    btnEliminarCursa.IsEnabled = true;
+                    btnEditarCursa.IsEnabled = true;
+                    btnEditarCircuit.IsEnabled = true;
+                    btnCrearCircuit.IsEnabled = true;
+                }
+                else
+                {
+                    btnObrirInscripcioCursa.IsEnabled = false;
+                    btnEliminarCursa.IsEnabled = false;
+                    btnEditarCursa.IsEnabled = false;
+                    btnEditarCircuit.IsEnabled = false;
+                    btnCrearCircuit.IsEnabled = false;
+                }
+
+                if (cursaSeleccionada.EstatId == 3 || cursaSeleccionada.EstatId == 6 || cursaSeleccionada.EstatId == 5)
+                {
+                    btnCancelarCursa.IsEnabled = true;
+                }
+                else
+                {
+                    btnCancelarCursa.IsEnabled = false;
+                }
+
+                if(cursaSeleccionada.EstatId == 3)
+                {
+                    btnTancarInscripcionsCursa.IsEnabled = true;
+                }
+                else
+                {
+                    btnTancarInscripcionsCursa.IsEnabled = false;
+                }
+
+                if(cursaSeleccionada.EstatId == 5)
+                {
+                    btnIniciarCursa.IsEnabled = true;
+                }
+                else
+                {
+                    btnIniciarCursa.IsEnabled = false;
+                }
+            }
+        }
 
         #endregion
 

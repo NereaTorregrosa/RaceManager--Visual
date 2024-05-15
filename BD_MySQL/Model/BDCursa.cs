@@ -22,6 +22,7 @@ namespace BD_MySQL.Model
         private string urlFoto;
         private string urlWeb;
         private string errorEliminar;
+        private int numParticipants;
 
         public BDCursa(int id, string nom, DateTime dataInici, DateTime dataFi, string lloc, int esportId, int estatId, string descripcio, int limitInscripcions, string urlFoto, string urlWeb)
         {
@@ -64,6 +65,7 @@ namespace BD_MySQL.Model
         public string UrlFoto { get => urlFoto; set => urlFoto = value; }
         public string UrlWeb { get => urlWeb; set => urlWeb = value; }
         public  string ErrorEliminar { get => errorEliminar; set => errorEliminar = value; }
+        public int NumParticipants { get => numParticipants; set => numParticipants = value; }
 
         public static List<BDCursa> getCurses(String mNom = "", DateTime? dt = null, int? idEstat = null)
         {
@@ -273,6 +275,31 @@ namespace BD_MySQL.Model
             }
 
 
+        }
+
+        public static int getParticipantsCursa(int idCursa)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+                    using (var consulta = connexio.CreateCommand())
+                    {
+                        DBUtils.createParam(consulta, "idCursa", idCursa, System.Data.DbType.Int32);
+                        consulta.CommandText = @"select total_participantes from vista_participants_per_cursa 
+                                                where cur_id = @idCursa";
+
+                        DbDataReader reader = consulta.ExecuteReader();
+                        int numParticipants = 0;
+                        while (reader.Read())
+                        {
+                           numParticipants = reader.GetInt32(reader.GetOrdinal("total_participantes"));
+                        }
+                        return numParticipants;
+                    }
+                }
+            }
         }
     }
 }
