@@ -130,48 +130,90 @@ namespace projecte3_TorregrosaNerea.Views
 
         public void editarCursa()
         {
+            bool okTipusElegit = false;
             cursaActual.Nom =  txbNom.Text;
-            cursaActual.DataInici = dpDataInici.SelectedDate.Value;
-            cursaActual.DataFi = dpDataFi.SelectedDate.Value;
+            if (dpDataInici.SelectedDate!= null)
+            {
+                cursaActual.DataInici = dpDataInici.SelectedDate.Value;
+            }
+
+            if (dpDataFi.SelectedDate != null)
+            {
+                cursaActual.DataFi = dpDataFi.SelectedDate.Value;
+            }
+            
+            
             cursaActual.Lloc = txbLloc.Text;
             int esportId = 0;
             if (cboTipus.SelectedItem != null)
             {
                 BDEsport e = cboTipus.SelectedItem as BDEsport;
                 esportId = e.Id;
+                okTipusElegit = true;
+
+            }
+            else
+            {
+                okTipusElegit = false;
             }
             cursaActual.EsportId = esportId;
-
             cursaActual.Descripcio = txbDesc.Text;
             cursaActual.LimitInscripcions = Int32.Parse(txbLimitInscripcions.Text);
-            string urlFoto = pathNouLogo;
             string urlWeb = txbWebsite.Text;
-            if (("").Equals(pathNouLogo) || pathNouLogo == null)
-            {
-                MessageBox.Show("La foto de la carrera no pot estar buida.");
-            }
 
             cursaActual.UrlWeb = urlWeb;
-            cursaActual.UrlFoto = urlFoto;
+            
 
             bool dataOk = Utils.EsDataFutura(cursaActual.DataInici, cursaActual.DataFi);
-            if(dataOk)
+            if (pathNouLogo != null)
             {
-                bool ok = BDCursa.updateCursa(cursaActual);
-                if (ok)
+                cursaActual.UrlFoto = pathNouLogo;
+                if (dpDataInici.SelectedDate != null || dpDataFi.SelectedDate != null)
                 {
-                    MessageBox.Show("Cursa actualitzada correctament.");
-                    MainWindow.navigationFrame.Navigate(new ConsultarCurses());
+                    if (dpDataInici.SelectedDate.Value < DateTime.Now)
+                    {
+                        MessageBox.Show("Data Inici no pot ser anterior a la data d'avui.");
+                    }
+                    else
+                    {
+                        if (dataOk)
+                        {
+                            if (okTipusElegit)
+                            {
+                                bool ok = BDCursa.updateCursa(cursaActual);
+                                if (ok)
+                                {
+                                    MessageBox.Show("Cursa actualitzada correctament.");
+                                    MainWindow.navigationFrame.Navigate(new ConsultarCurses());
+                                }
+                                else
+                                {
+                                    MessageBox.Show("No s'ha pogut actualitzar la cursa.");
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("S'ha d'elegir un tipus per la cursa.");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Data Fi no pot ser anterior a Data Inici.");
+
+                        }
+                    }
+
                 }
                 else
                 {
-                    MessageBox.Show("No s'ha pogut actualitzar la cursa.");
+                    MessageBox.Show("Data Inici i Data Fi no poden estar buides.");
                 }
             }
             else
             {
-                MessageBox.Show("Data Fi no pot ser anterior a Data Inici.");
+                MessageBox.Show("La foto de la carrera no pot estar buida.");
             }
+
 
         }
 

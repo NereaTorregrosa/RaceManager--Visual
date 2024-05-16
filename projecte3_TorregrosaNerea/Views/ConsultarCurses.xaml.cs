@@ -30,12 +30,14 @@ namespace projecte3_TorregrosaNerea.Views
         private BDCheckpoints checkpointClonat;
         private BDCircuit circuitSeleccionat;
         private BDCheckpoints checkpointAbansEditar;
+        private string seleccioEstat;
         public ConsultarCurses()
         {
             InitializeComponent();
             omplirCboFiltreiInicialitzarRB();
             inicialitzarBotons();
             launchGetCurses();
+            omplirCboEstats();
             circuitsCursa = new List<BDCircuit>();
             checkpoints = new OC<BDCheckpoints>();
         }
@@ -54,17 +56,17 @@ namespace projecte3_TorregrosaNerea.Views
                         case "Filtrar per nom":
                             dpFiltreData.Visibility = Visibility.Collapsed;
                             txbFiltreNom.Visibility = Visibility.Visible;
-                            spEstats.Visibility = Visibility.Collapsed;
+                            cboEstats.Visibility = Visibility.Collapsed;
                             break;
                         case "Filtrar per data":
                             dpFiltreData.Visibility = Visibility.Visible;
                             txbFiltreNom.Visibility = Visibility.Collapsed;
-                            spEstats.Visibility = Visibility.Collapsed;
+                            cboEstats.Visibility = Visibility.Collapsed;
                             break;
                         case "Filtrar per estat":
                             dpFiltreData.Visibility = Visibility.Collapsed;
                             txbFiltreNom.Visibility = Visibility.Collapsed;
-                            spEstats.Visibility = Visibility.Visible;
+                            cboEstats.Visibility = Visibility.Visible;
                             break;
                     }
                 }
@@ -92,9 +94,7 @@ namespace projecte3_TorregrosaNerea.Views
         {
             txbFiltreNom.Text = "";
             dpFiltreData.SelectedDate = null;
-            rbActives.IsChecked = false;
-            rbCancelades.IsChecked = false;
-            rbTancades.IsChecked = false;
+            cboEstats.SelectedItem = null;
             launchGetCurses();
         }
 
@@ -130,7 +130,6 @@ namespace projecte3_TorregrosaNerea.Views
 
         private void btnGuardarKMChk_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Hola");
             if(checkpointClonat != null)
             {
                 if (BDCheckpoints.CheckpointExists(checkpointClonat.IdCircuit, checkpointClonat.Kilometre))
@@ -227,6 +226,20 @@ namespace projecte3_TorregrosaNerea.Views
             confirmarCancelarCursa();
         }
 
+        private void cboEstats_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cboEstats.SelectedItem != null)
+            {
+                btnFiltrar.IsEnabled = true;
+                btnNetejarFiltres.IsEnabled = true;
+                if (cboEstats.SelectedItem is string)
+                {
+                    seleccioEstat = (string)cboEstats.SelectedItem;
+
+
+                }
+            }
+        }
         #region Mètodes
         public void omplirCboFiltreiInicialitzarRB()
         {
@@ -254,24 +267,43 @@ namespace projecte3_TorregrosaNerea.Views
 
         private void launchGetCurses()
         {
-            int estatCursa = estatSelected();
+            int estatCursa = 0;
+            if (cboEstats.SelectedItem != null)
+            {
+                estatCursa = estatSelected(seleccioEstat);
+            }
             DateTime dataSeleccionada;
             dataSeleccionada = dpFiltreData.SelectedDate ?? DateTime.MinValue;
             dgCurses.ItemsSource = BDCursa.getCurses(txbFiltreNom.Text,dataSeleccionada,estatCursa);
         }
 
-        private int estatSelected() {
-            if (rbActives.IsChecked == true)
+        private int estatSelected(string seleccio) {
+            if (seleccio.Equals("En preparació"))
             {
                 return 1;
             }
-            else if (rbCancelades.IsChecked == true)
+            else if (seleccio.Equals("Esborrades")) 
             {
-                return 4;
+                return 2;
             }
-            else if (rbTancades.IsChecked == true)
+            else if (seleccio.Equals("Inscripció oberta"))
+            {
+                return 3;
+            } else if (seleccio.Equals("Inscripció tancada")) 
             {
                 return 5;
+            }
+            else if (seleccio.Equals("En curs"))
+            {
+                return 6;
+            }
+            else if (seleccio.Equals("Finalitzades"))
+            {
+                return 7;
+            }
+            else if (seleccio.Equals("Cancel·lades"))
+            {
+                return 4;
             }
             else {
                 return 0;
@@ -459,6 +491,20 @@ namespace projecte3_TorregrosaNerea.Views
                     btnIniciarCursa.IsEnabled = false;
                 }
             }
+        }
+
+        public void omplirCboEstats()
+        {
+            List<String> estats = new List<String>();
+            estats.Add("En preparació");
+            estats.Add("Esborrades");
+            estats.Add("Inscripció oberta");
+            estats.Add("Inscripció tancada");
+            estats.Add("En curs");
+            estats.Add("Finalitzades");
+            estats.Add("Cancel·lades");
+
+            cboEstats.ItemsSource = estats;
         }
 
         #endregion

@@ -56,7 +56,7 @@ namespace projecte3_TorregrosaNerea
         public static bool EsDataFutura(DateTime data1, DateTime data12)
         {
 
-            return data12.CompareTo(data1) > 0;
+            return data12.Date.CompareTo(data1.Date) > 0;
         }
 
         public static string convertirDateTimeAString(DateTime d) 
@@ -71,5 +71,6 @@ namespace projecte3_TorregrosaNerea
             return dataAvui.Add(intervalTemps);
 
         }
+
     }
 }

@@ -23,6 +23,7 @@ namespace BD_MySQL.Model
         private string urlWeb;
         private string errorEliminar;
         private int numParticipants;
+        private string estat;
 
         public BDCursa(int id, string nom, DateTime dataInici, DateTime dataFi, string lloc, int esportId, int estatId, string descripcio, int limitInscripcions, string urlFoto, string urlWeb)
         {
@@ -66,6 +67,7 @@ namespace BD_MySQL.Model
         public string UrlWeb { get => urlWeb; set => urlWeb = value; }
         public  string ErrorEliminar { get => errorEliminar; set => errorEliminar = value; }
         public int NumParticipants { get => numParticipants; set => numParticipants = value; }
+        public string Estat { get => estat; set => estat = value; }
 
         public static List<BDCursa> getCurses(String mNom = "", DateTime? dt = null, int? idEstat = null)
         {
@@ -102,8 +104,10 @@ namespace BD_MySQL.Model
                             int limitInsc = reader.GetInt32(reader.GetOrdinal("cur_limit_inscr"));
                             string foto = reader.GetString(reader.GetOrdinal("cur_foto"));
                             string web = reader.GetString(reader.GetOrdinal("cur_web"));
-
-                            curses.Add(new BDCursa(id, name,di,df,lloc,esportId,estatId,desc,limitInsc,foto,web));
+                            string estat = BDEstat.getEstatById(estatId);
+                            BDCursa cursaNova = new BDCursa(id, name, di, df, lloc, esportId, estatId, desc, limitInsc, foto, web);
+                            cursaNova.Estat = estat;
+                            curses.Add(cursaNova);
                         }
                         return curses;
                     }

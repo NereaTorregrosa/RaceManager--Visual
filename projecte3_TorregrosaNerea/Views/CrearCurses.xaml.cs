@@ -88,15 +88,31 @@ namespace projecte3_TorregrosaNerea.Views
         }
         public void afegirCursa()
         {
+            bool okTipusElegit = false;
              string nom = txbNom.Text;
-             DateTime dataInici = dpDataInici.SelectedDate.Value;
-             DateTime dataFi = dpDataFi.SelectedDate.Value;
+            DateTime dataInici = new DateTime();
+            DateTime dataFi = new DateTime();
+            if (dpDataInici.SelectedDate != null)
+            {
+                dataInici = dpDataInici.SelectedDate.Value;
+            }
+
+            if(dpDataFi.SelectedDate != null)
+            {
+                dataFi = dpDataFi.SelectedDate.Value;
+            }
+             
              string lloc = txbLloc.Text;
             int esportId = 0;
             if (cboTipus.SelectedItem != null)
             {
                 BDEsport e = cboTipus.SelectedItem as BDEsport;
                 esportId = e.Id;
+                okTipusElegit = true;
+            }
+            else
+            {
+                okTipusElegit = false;
             }
              
              string descripcio = txbDesc.Text;
@@ -109,23 +125,45 @@ namespace projecte3_TorregrosaNerea.Views
             else
             {
                 bool dataOk = Utils.EsDataFutura(dataInici,dataFi);
-                if(dataOk)
+                if(!dataInici.Equals(DateTime.MinValue) || !dataFi.Equals(DateTime.MinValue))
                 {
-                    BDCursa c = new BDCursa(nom, dataInici, dataFi, lloc, esportId, 1, descripcio, limitInscripcions, urlFoto, urlWeb);
-                    bool ok = BDCursa.insertCursa(c);
-                    if (ok)
+                    if(dataInici < DateTime.Now.Date)
                     {
-                        MessageBox.Show("Cursa inserida correctament.");
-                        MainWindow.navigationFrame.Navigate(new ConsultarCurses());
+                        MessageBox.Show("Data Inici no pot ser anterior a la data d'avui.");
                     }
                     else
                     {
-                        MessageBox.Show("No s'ha pogut inserir la cursa.");
-                    }
+                        if (dataOk)
+                        {
+                            if (okTipusElegit)
+                            {
+                                BDCursa c = new BDCursa(nom, dataInici, dataFi, lloc, esportId, 1, descripcio, limitInscripcions, urlFoto, urlWeb);
+                                bool ok = BDCursa.insertCursa(c);
+                                if (ok)
+                                {
+                                    MessageBox.Show("Cursa inserida correctament.");
+                                    MainWindow.navigationFrame.Navigate(new ConsultarCurses());
+                                }
+                                else
+                                {
+                                    MessageBox.Show("No s'ha pogut inserir la cursa.");
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("S'ha d'elegir un tipus per la cursa.");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Data Fi no pot ser anterior a Data Inici.");
+
+                        }
+                    }  
                 }
                 else
                 {
-                    MessageBox.Show("Data Fi no pot ser anterior a Data Inici.");
+                    MessageBox.Show("Data Inici i Data Fi no poden estar buides.");
                 }
                 
             }

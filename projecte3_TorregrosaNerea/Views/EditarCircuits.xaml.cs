@@ -169,6 +169,7 @@ namespace projecte3_TorregrosaNerea.Views
         public void modificarCircuit()
         {
             bool okBorrarCircuitCategoria = false;
+            bool okCategoria = false;
             if (circuitActual != null)
             {
                 circuitActual.Nom = txbNom.Text;
@@ -236,7 +237,11 @@ namespace projecte3_TorregrosaNerea.Views
                         }
                     }
                     
-                }  
+                }
+                else
+                {
+                    MessageBox.Show("La categoria no pot estar buida.");
+                }
             }
         }
         

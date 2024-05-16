@@ -43,6 +43,7 @@ namespace projecte3_TorregrosaNerea.Views
         {
             cboCategoria.ItemsSource = BDCategoria.getCategoriesFromEsport(c.EsportId);
             cursaActual = c;
+            txbNumCheckpoints.Text = "0" ;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -141,10 +142,16 @@ namespace projecte3_TorregrosaNerea.Views
         {
             string nom = txbNom.Text;
             int categoriaId = 0;
+            bool okCategoria = false;
             if (cboCategoria.SelectedItem != null)
             {
                 BDCategoria e = cboCategoria.SelectedItem as BDCategoria;
                 categoriaId = e.Id;
+                okCategoria = true;
+            }
+            else
+            {
+                okCategoria = false;
             }
 
             int numero = Int32.Parse(txbNumero.Text);
@@ -153,20 +160,28 @@ namespace projecte3_TorregrosaNerea.Views
             DateTime tempsEstimat = Utils.aconseguirTempsEstimat(txbTempsEstimat.Text);
 
             BDCircuit ci = new BDCircuit(cursaActual.Id,numero,distancia,nom,preu,tempsEstimat);
-            bool ok = BDCircuit.insertCircuit(ci);
-            
-            if (ok)
+            if (okCategoria)
             {
-                int idUltimCircuit = BDCircuit.ObtenirUltimCircuitId();
-                BDCircuitCategoria.insertCircuitCategoria(categoriaId, idUltimCircuit);
-                MessageBox.Show("Circuit inserit correctament.");
-                tornarAConusltarCurses();
+                bool ok = BDCircuit.insertCircuit(ci);
 
+                if (ok)
+                {
+                    int idUltimCircuit = BDCircuit.ObtenirUltimCircuitId();
+                    BDCircuitCategoria.insertCircuitCategoria(categoriaId, idUltimCircuit);
+                    MessageBox.Show("Circuit inserit correctament.");
+                    tornarAConusltarCurses();
+
+                }
+                else
+                {
+                    MessageBox.Show("No s'ha pogut inserir el circuit.");
+                }
             }
             else
             {
-                MessageBox.Show("No s'ha pogut inserir el circuit.");
+                MessageBox.Show("La categoria no pot estar buida.");
             }
+
             
         }
 
