@@ -27,7 +27,7 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <DataGrid x:Name="dgParticipants" Margin="10,0,0,0" Foreground="Black" AutoGenerateColumns="False">
+            <DataGrid x:Name="dgParticipants" Margin="10,0,0,0" Foreground="Black" AutoGenerateColumns="False" SelectionChanged="dgParticipants_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nom" Binding="{Binding Nom}"></DataGridTextColumn>
                     <DataGridTextColumn Width="100" Header="Cognoms" Binding="{Binding Cognoms}"></DataGridTextColumn>
@@ -37,19 +37,75 @@
                 </DataGrid.Columns>
             </DataGrid>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Margin="5">
-                <Grid x:Name="grdDetallParticipant">
+                <Grid x:Name="grdDetallParticipant" Margin="15">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="2.5*"></RowDefinition>
-                        <RowDefinition Height="0.5*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.2*"></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition Width="1.2*"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
+                    <GroupBox Margin="10" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Grid.RowSpan="3">
+                        <GroupBox.Header>
+                            <TextBlock Text="PARTICIPANT" FontWeight="Bold" FontSize="14"></TextBlock>
+                        </GroupBox.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Nom: " Grid.Row="0" Grid.Column="0" Margin="10,10,0,0"></TextBlock>
+                            <TextBlock Text="Telèfon: " Grid.Row="1" Grid.Column="0" Margin="10,0,0,0"/>
+                            <TextBlock Text="Nif: " Grid.Row="0" Grid.Column="2" Margin="0,10,0,0"/>
+                            <TextBlock Text="Email: " Grid.Row="1" Grid.Column="2"/>
+                            <TextBlock Text="Data naixement: " Grid.Row="2" Grid.Column="0" Margin="10,0,0,0"/>
+                            <TextBlock Text="Federat: " Grid.Row="2" Grid.Column="2"/>
+                            <TextBlock x:Name="txbNom" Grid.Row="0" Grid.Column="1" Margin="0,10,0,0"></TextBlock>
+                            <TextBlock x:Name="txbTelefon" Grid.Row="1" Grid.Column="1"></TextBlock>
+                            <TextBlock x:Name="txbNif" Grid.Row="0" Grid.Column="3" Margin="0,10,0,0"></TextBlock>
+                            <TextBlock x:Name="txbEmail" Grid.Row="1" Grid.Column="3"></TextBlock>
+                            <TextBlock x:Name="txbDataNaix" Grid.Row="2" Grid.Column="1"></TextBlock>
+                            <TextBlock x:Name="txbFederat" Grid.Row="2" Grid.Column="3"></TextBlock>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" Grid.ColumnSpan="4" Margin="10">
+                        <GroupBox.Header>
+                            <TextBlock Text="INSCRIPCIÓ" FontWeight="Bold" FontSize="14"></TextBlock>
+                        </GroupBox.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Dorsal: " Grid.Row="0" Grid.Column="0" Margin="10,10,0,0"/>
+                            <TextBlock Text="Beacon: " Grid.Row="0" Grid.Column="2" Margin="0,10,0,0"/>
+                            <TextBlock Text="Retirat: " Grid.Row="1" Grid.Column="0" Margin="10,0,0,0"/>
+                            <TextBlock x:Name="txbDorsal" Grid.Row="0" Grid.Column="1" Margin="0,10,0,0"></TextBlock>
+                            <TextBlock x:Name="txbBeacon" Grid.Row="0" Grid.Column="3" Margin="0,10,0,0"></TextBlock>
+                            <TextBlock x:Name="txbRetirat" Grid.Row="1" Grid.Column="1"></TextBlock>
+                        </Grid>
+                    </GroupBox>
+
                 </Grid>
             </Border>
         </Grid>

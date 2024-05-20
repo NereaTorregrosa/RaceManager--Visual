@@ -48,11 +48,48 @@ namespace projecte3_TorregrosaNerea.Views
             txbFiltre.Text = "";
             launchGetParticipants();
         }
+        private void dgParticipants_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            mostrarDetallParticipant();
+        }
         private void launchGetParticipants()
         {
             dgParticipants.ItemsSource = BDParticipant.getParticipantsFromCursa(cursaActual.Id,txbFiltre.Text);
         }
 
+        private void mostrarDetallParticipant()
+        {
+            if (dgParticipants.SelectedItem != null)
+            {
+                BDParticipant participantSeleccionat = dgParticipants.SelectedItem as BDParticipant;
+                txbNom.Text = participantSeleccionat.Nom + " " + participantSeleccionat.Cognoms;
+                txbTelefon.Text = participantSeleccionat.Telefon;
+                txbNif.Text = participantSeleccionat.Nif;
+                txbEmail.Text = participantSeleccionat.Email;
+                txbDataNaix.Text = Utils.convertirDateTimeAStringData(participantSeleccionat.Data_naixement);
+                if(participantSeleccionat.EsFederat == true)
+                {
+                    txbFederat.Text = "Sí";
+                }
+                else
+                {
+                    txbFederat.Text = "No";
+                }
+                BDInscripcio inscripcioActual = BDInscripcio.getDadesInscripcioFromParticipant(participantSeleccionat.Id,cursaActual.Id);
+                txbDorsal.Text = inscripcioActual.Dorsal.ToString();
+                string beaconCode = BDBeacon.getCodeFromBeaconById(inscripcioActual.IdBeacon);
+                txbBeacon.Text = beaconCode;
+                if (inscripcioActual.Retirat == true)
+                {
+                    txbRetirat.Text = "Sí";
+                }
+                else
+                {
+                    txbRetirat.Text = "No";
+                }
+            }
+           
+        }
 
     }
 }

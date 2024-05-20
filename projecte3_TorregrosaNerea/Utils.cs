@@ -64,6 +64,11 @@ namespace projecte3_TorregrosaNerea
            return d.ToString("HH:mm:ss");
         }
 
+        public static string convertirDateTimeAStringData(DateTime d)
+        {
+            return d.ToString("dd/MM/yyyy");
+        }
+
         public static  DateTime aconseguirTempsEstimat(string text)
         {
             TimeSpan intervalTemps = TimeSpan.ParseExact(text, "hh\\:mm\\:ss", CultureInfo.InvariantCulture);
