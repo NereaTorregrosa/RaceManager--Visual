@@ -240,6 +240,16 @@ namespace projecte3_TorregrosaNerea.Views
                 }
             }
         }
+
+        private void btnRecepcioCorredors_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgCurses.SelectedItem != null)
+            {
+                BDCursa cursaSeleccionada = dgCurses.SelectedItem as BDCursa;
+                MainWindow.navigationFrame.Navigate(new RecepcioCorredors(cursaSeleccionada));
+                
+            }
+        }
         #region Mètodes
         public void omplirCboFiltreiInicialitzarRB()
         {
@@ -263,6 +273,7 @@ namespace projecte3_TorregrosaNerea.Views
             btnTancarInscripcionsCursa.IsEnabled = false;
             btnCancelarCursa.IsEnabled = false;
             btnIniciarCursa.IsEnabled = false;
+            btnRecepcioCorredors.IsEnabled = false;
         }
 
         private void launchGetCurses()
@@ -490,6 +501,15 @@ namespace projecte3_TorregrosaNerea.Views
                 {
                     btnIniciarCursa.IsEnabled = false;
                 }
+
+                if (cursaSeleccionada.EstatId == 6)
+                {
+                    btnRecepcioCorredors.IsEnabled = true;
+                }
+                else
+                {
+                    btnRecepcioCorredors.IsEnabled = false;
+                }
             }
         }
 
@@ -507,8 +527,8 @@ namespace projecte3_TorregrosaNerea.Views
             cboEstats.ItemsSource = estats;
         }
 
-        #endregion
 
+        #endregion
 
     }
 }

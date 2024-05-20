@@ -117,12 +117,15 @@
                 <Button x:Name="btnTancarInscripcionsCursa" Height="30" Width="120" Content="Tancar Inscripcions" HorizontalAlignment="Left" Margin="0,0,10,0" ></Button>
                 <Button x:Name="btnIniciarCursa" Height="30" Width="100" Content="Iniciar Cursa" HorizontalAlignment="Left" Margin="0,0,10,0" ></Button>
             </StackPanel>
-            <StackPanel Grid.Column="0" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button x:Name="btnRecepcioCorredors" Height="30" Width="120" Content="Recepció corredors" HorizontalAlignment="Right" Margin="0,0,10,0" Click="btnRecepcioCorredors_Click"></Button>
+            <StackPanel Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal">
                 <Button x:Name="btnCrearCursa" Height="30" Width="100" Content="Crear Cursa" HorizontalAlignment="Left" Margin="0,0,10,0" Click="btnCrearCursa_Click"></Button>
                 <Button x:Name="btnEditarCursa" Height="30" Width="100" Content="Editar Cursa" HorizontalAlignment="Right" Margin="0,0,10,0" Click="btnEditarCursa_Click"></Button>
             </StackPanel>
-            <Button x:Name="btnCancelarCursa" Grid.Column="1" Height="30" Width="100" Content="Cancel·lar Cursa" HorizontalAlignment="Left" Margin="20,0,10,0" Click="btnCancelarCursa_Click"></Button>
-            <Button x:Name="btnEliminarCursa" Grid.Column="1" Height="30" Width="100" Content="Eliminar Cursa" HorizontalAlignment="Right" Margin="0,0,10,0" Click="btnEliminarCursa_Click"></Button>
+            <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button x:Name="btnCancelarCursa"  Height="30" Width="100" Content="Cancel·lar Cursa" HorizontalAlignment="Left" Margin="10,0,40,0" Click="btnCancelarCursa_Click"></Button>
+                <Button x:Name="btnEliminarCursa" Height="30" Width="100" Content="Eliminar Cursa" HorizontalAlignment="Right" Margin="0,0,10,0" Click="btnEliminarCursa_Click"></Button>
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>
