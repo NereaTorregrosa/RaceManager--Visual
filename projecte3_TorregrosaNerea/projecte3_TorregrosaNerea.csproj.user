@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\AssiganrBeaconIDorsal.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\ConsultarCurses.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -22,6 +25,9 @@
     <Compile Update="Views\EditarCursa.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Inscripcions.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Login.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -31,6 +37,9 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AssiganrBeaconIDorsal.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ConsultarCurses.xaml">
@@ -46,6 +55,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\EditarCursa.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Inscripcions.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Login.xaml">

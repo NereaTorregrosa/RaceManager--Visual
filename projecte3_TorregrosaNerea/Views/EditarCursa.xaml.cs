@@ -54,6 +54,8 @@ namespace projecte3_TorregrosaNerea.Views
                 textBox.Background = Brushes.White;
                 btnGuardar.IsEnabled = true;
             }
+
+            CheckFormValidity();
         }
 
         private void txbLimitInscripcions_TextChanged(object sender, TextChangedEventArgs e)
@@ -68,6 +70,8 @@ namespace projecte3_TorregrosaNerea.Views
             {
                 txbLimitInscripcions.Background = Brushes.White;
                 btnGuardar.IsEnabled = true;
+
+                CheckFormValidity();
             }
         }
 
@@ -256,5 +260,20 @@ namespace projecte3_TorregrosaNerea.Views
             }
         }
 
+        private void CheckFormValidity()
+        {
+            bool isTextNomValid = !string.IsNullOrEmpty(txbNom.Text);
+            bool isLimitInscripcionsValid = Utils.EsNumeroEnter(txbLimitInscripcions.Text) && !string.IsNullOrEmpty(txbLimitInscripcions.Text);
+            bool isTextLLocValid = !string.IsNullOrEmpty(txbLloc.Text);
+
+            if (isTextNomValid && isLimitInscripcionsValid && isTextLLocValid)
+            {
+                btnGuardar.IsEnabled = true;
+            }
+            else
+            {
+                btnGuardar.IsEnabled = false;
+            }
+        }
     }
 }

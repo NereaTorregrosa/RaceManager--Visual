@@ -22,6 +22,8 @@ namespace projecte3_TorregrosaNerea.Views
     public partial class RecepcioCorredors : Page
     {
         private BDCursa cursaActual;
+        private BDParticipant participantSeleccionat;
+        private BDInscripcio inscripcioActual;
 
         public RecepcioCorredors()
         {
@@ -36,6 +38,8 @@ namespace projecte3_TorregrosaNerea.Views
             }
 
             launchGetParticipants();
+            grdDetallParticipant.Visibility = Visibility.Collapsed;
+            btnAssiganrBeaconDorsal.IsEnabled = false;
         }
 
         private void btnFiltrar_Click(object sender, RoutedEventArgs e)
@@ -50,7 +54,26 @@ namespace projecte3_TorregrosaNerea.Views
         }
         private void dgParticipants_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            mostrarDetallParticipant();
+            if (dgParticipants.SelectedItem != null)
+            {
+                mostrarDetallParticipant();
+            }
+               
+        }
+
+        private void btnAssiganrBeaconDorsal_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.navigationFrame.Navigate(new AssiganrBeaconIDorsal(cursaActual,participantSeleccionat,inscripcioActual));
+        }
+
+        private void btnRetirarParticipant_Click(object sender, RoutedEventArgs e)
+        {
+            retirarParticipant();
+        }
+
+        private void btnTornarAConsultarCurses_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.navigationFrame.Navigate(new ConsultarCurses());
         }
         private void launchGetParticipants()
         {
@@ -61,7 +84,8 @@ namespace projecte3_TorregrosaNerea.Views
         {
             if (dgParticipants.SelectedItem != null)
             {
-                BDParticipant participantSeleccionat = dgParticipants.SelectedItem as BDParticipant;
+                grdDetallParticipant.Visibility = Visibility.Visible;
+                participantSeleccionat = dgParticipants.SelectedItem as BDParticipant;
                 txbNom.Text = participantSeleccionat.Nom + " " + participantSeleccionat.Cognoms;
                 txbTelefon.Text = participantSeleccionat.Telefon;
                 txbNif.Text = participantSeleccionat.Nif;
@@ -75,21 +99,57 @@ namespace projecte3_TorregrosaNerea.Views
                 {
                     txbFederat.Text = "No";
                 }
-                BDInscripcio inscripcioActual = BDInscripcio.getDadesInscripcioFromParticipant(participantSeleccionat.Id,cursaActual.Id);
+                inscripcioActual = BDInscripcio.getDadesInscripcioFromParticipant(participantSeleccionat.Id,cursaActual.Id);
                 txbDorsal.Text = inscripcioActual.Dorsal.ToString();
-                string beaconCode = BDBeacon.getCodeFromBeaconById(inscripcioActual.IdBeacon);
-                txbBeacon.Text = beaconCode;
+                if(inscripcioActual.IdBeacon != 0)
+                {
+                    string beaconCode = BDBeacon.getCodeFromBeaconById(inscripcioActual.IdBeacon);
+                    txbBeacon.Text = beaconCode;
+                    btnAssiganrBeaconDorsal.IsEnabled = false;
+                }
+                else
+                {
+                    txbBeacon.Text = "";
+                    btnAssiganrBeaconDorsal.IsEnabled = true;
+                }
+
                 if (inscripcioActual.Retirat == true)
                 {
                     txbRetirat.Text = "Sí";
+                    btnRetirarParticipant.IsEnabled = false;
                 }
                 else
                 {
                     txbRetirat.Text = "No";
+                    btnRetirarParticipant.IsEnabled = true;
+
                 }
             }
            
         }
+
+        private void retirarParticipant()
+        {
+            MessageBoxResult result = MessageBox.Show("¿Estás segur de que vols retirar el participant?", "Confirmació de retirament de participant", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                inscripcioActual.Retirat = true;
+                bool ok = BDInscripcio.updateInscripcio(inscripcioActual);
+                if (ok)
+                {
+                    MessageBox.Show("Participant retirat correctament.");
+                    grdDetallParticipant.Visibility = Visibility.Collapsed;
+
+                }
+                else
+                {
+                    MessageBox.Show("No s'ha pogut retirar el participant");
+                }
+            }
+            
+        }
+
 
     }
 }

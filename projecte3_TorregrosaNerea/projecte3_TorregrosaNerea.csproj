@@ -9,6 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\logo_raceManager.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\logo_raceManager.jpeg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BD_MySQL\BD_MySQL.csproj" />
   </ItemGroup>
 

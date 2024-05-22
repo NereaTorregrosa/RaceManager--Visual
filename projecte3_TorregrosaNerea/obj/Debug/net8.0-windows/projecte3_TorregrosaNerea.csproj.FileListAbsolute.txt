@@ -62,3 +62,9 @@ C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNe
 C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\Views\EditarCircuits.baml
 C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\Views\RecepcioCorredors.g.cs
 C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\Views\RecepcioCorredors.baml
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\Views\AssiganrBeaconIDorsal.g.cs
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\Views\AssiganrBeaconIDorsal.baml
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\bin\Debug\net8.0-windows\Assets\logo_raceManager.jpeg
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\projecte3_TorregrosaNerea_Content.g.cs
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\Views\Inscripcions.g.cs
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\Views\Inscripcions.baml

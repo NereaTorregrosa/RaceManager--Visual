@@ -58,7 +58,11 @@ namespace BD_MySQL.Model
                             DateTime dataInsc = reader.GetDateTime(reader.GetOrdinal("ins_data"));
                             int dorsal = reader.GetInt32(reader.GetOrdinal("ins_dorsal"));
                             bool retirat = reader.GetBoolean(reader.GetOrdinal("ins_retirat"));
-                            int idBeacon = reader.GetInt32(reader.GetOrdinal("ins_bea_id"));
+                            int idBeacon = 0;
+                            if (!reader.IsDBNull(reader.GetOrdinal("ins_bea_id")))
+                            {
+                                idBeacon = reader.GetInt32(reader.GetOrdinal("ins_bea_id"));
+                            }
                             int idCircuitCategoria = reader.GetInt32(reader.GetOrdinal("ins_ccc_id"));
                             inscripcio = new BDInscripcio(id,idParticipant,dataInsc,dorsal,retirat,idBeacon,idCircuitCategoria);
                         }
@@ -67,5 +71,75 @@ namespace BD_MySQL.Model
                 }
             }
         }
+
+        public static bool updateInscripcio(BDInscripcio i)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+
+                    // Comencem una transacció dins de la que volem executar updates
+                    DbTransaction transaccio = connexio.BeginTransaction();
+
+                    using (var consulta = connexio.CreateCommand())
+                    {
+                        consulta.Transaction = transaccio; // Associem la consulta a la transacció
+
+                        DBUtils.createParam(consulta, "dorsal", i.Dorsal, System.Data.DbType.Int32);
+                        DBUtils.createParam(consulta, "idBeacon", i.IdBeacon, System.Data.DbType.Int32);
+                        DBUtils.createParam(consulta, "retirat", i.Retirat, System.Data.DbType.Boolean);
+                        DBUtils.createParam(consulta, "id", i.Id, System.Data.DbType.Int32);
+
+                        consulta.CommandText =
+                            @"update inscripcio set                             
+                                ins_dorsal            = @dorsal,
+                                ins_bea_id            = @idBeacon,
+                                ins_retirat           = @retirat
+                                where
+                                    ins_id      = @id
+                                ";
+                        int filesModificades = consulta.ExecuteNonQuery();
+                        if (filesModificades != 1)
+                        {
+                            transaccio.Rollback();
+                            return false;
+                        }
+                        else
+                        {
+                            transaccio.Commit();
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        public static bool IsDorsalDuplicated(int cccId, int dorsal)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+                    using (var consulta = connexio.CreateCommand())
+                    {
+                        consulta.CommandText = @"
+                    SELECT COUNT(*)
+                    FROM inscripcio
+                    WHERE ins_ccc_id = @cccId AND ins_dorsal = @dorsal
+                ";
+
+                        DBUtils.createParam(consulta, "cccId", cccId, System.Data.DbType.Int32);
+                        DBUtils.createParam(consulta, "dorsal", dorsal, System.Data.DbType.Int32);
+
+                        int count = Convert.ToInt32(consulta.ExecuteScalar());
+                        return count > 0;
+                    }
+                }
+            }
+        }
+
     }
 }

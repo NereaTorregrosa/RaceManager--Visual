@@ -69,6 +69,7 @@ namespace projecte3_TorregrosaNerea.Views
                 textBox.Background = Brushes.White;
                 btnGuardar.IsEnabled = true;
             }
+            CheckFormValidity();
         }
 
         private void txbDistancia_TextChanged(object sender, TextChangedEventArgs e)
@@ -86,6 +87,7 @@ namespace projecte3_TorregrosaNerea.Views
                 textBox.Background = Brushes.White;
                 btnGuardar.IsEnabled = true;
             }
+            CheckFormValidity();
         }
 
         private void txbPreu_TextChanged(object sender, TextChangedEventArgs e)
@@ -103,6 +105,7 @@ namespace projecte3_TorregrosaNerea.Views
                 textBox.Background = Brushes.White;
                 btnGuardar.IsEnabled = true;
             }
+            CheckFormValidity();
         }
 
         private void TextBoxInt_TextChanged(object sender, TextChangedEventArgs e)
@@ -120,6 +123,7 @@ namespace projecte3_TorregrosaNerea.Views
                 textBox.Background = Brushes.White;
                 btnGuardar.IsEnabled = true;
             }
+            CheckFormValidity();
         }
 
         private void txbTempsEstimat_TextChanged(object sender, TextChangedEventArgs e)
@@ -137,6 +141,8 @@ namespace projecte3_TorregrosaNerea.Views
                 textBox.Background = Brushes.White;
                 btnGuardar.IsEnabled = true;
             }
+
+            CheckFormValidity();
         }
         public void afegirCircuit()
         {
@@ -194,6 +200,23 @@ namespace projecte3_TorregrosaNerea.Views
             MainWindow.navigationFrame.Navigate(new ConsultarCurses());
         }
 
+        private void CheckFormValidity()
+        {
+            bool isTextNomValid = !string.IsNullOrEmpty(txbNom.Text);
+            bool isDistanciaValid = Utils.EsDouble(txbDistancia.Text) && !string.IsNullOrEmpty(txbDistancia.Text);
+            bool isPreuValid = Utils.EsDecimal(txbPreu.Text) && !string.IsNullOrEmpty(txbPreu.Text);
+            bool isNumeroValid = Utils.EsNumeroEnter(txbNumero.Text) && !string.IsNullOrEmpty(txbPreu.Text);
+            bool isTempsEstimatValid = Utils.TeFormatHora(txbTempsEstimat.Text) && !string.IsNullOrEmpty(txbTempsEstimat.Text);
+            if (isTextNomValid && isDistanciaValid && isPreuValid)
+
+            {
+                btnGuardar.IsEnabled = true;
+            }
+            else
+            {
+                btnGuardar.IsEnabled = false;
+            }
+        }
 
 
     }

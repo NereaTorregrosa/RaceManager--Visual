@@ -31,6 +31,17 @@ namespace BD_MySQL.Model
             Nif = nif;
         }
 
+        public BDParticipant(string nom, string cognoms, DateTime data_naixement, string telefon, string email, bool esFederat, string nif)
+        {
+            Nom = nom;
+            Cognoms = cognoms;
+            Data_naixement = data_naixement;
+            Telefon = telefon;
+            Email = email;
+            EsFederat = esFederat;
+            Nif = nif;
+        }
+
         public int Id { get => id; set => id = value; }
         public string Nom { get => nom; set => nom = value; }
         public string Cognoms { get => cognoms; set => cognoms = value; }
@@ -71,6 +82,69 @@ namespace BD_MySQL.Model
                             participants.Add(participant);
                         }
                         return participants;
+                    }
+                }
+            }
+        }
+
+        public static Task<bool> checkIfParticipantExist(string dni)
+        {
+            return Task.Run(() =>
+            {
+                using (var context = new MySqlDbContext())
+                {
+                    using (var connexio = context.Database.GetDbConnection())
+                    {
+                        connexio.Open();
+                        using (var consulta = connexio.CreateCommand())
+                        {
+                            DBUtils.createParam(consulta, "dni", dni, System.Data.DbType.String);
+                            consulta.CommandText = @"select * from participant where par_nif = @dni";
+                            using (var reader = consulta.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    return true;
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                            }
+
+                        }
+                    }
+                }
+            });
+        }
+
+        public static BDParticipant getParticipantByDNI(string dni)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+                    using (var consulta = connexio.CreateCommand())
+                    {
+                        DBUtils.createParam(consulta, "dni", dni, System.Data.DbType.String);
+                        consulta.CommandText = @"select * from participant where par_nif = @dni";
+
+                        DbDataReader reader = consulta.ExecuteReader();
+                        BDParticipant p = null;
+                        while (reader.Read())
+                        {
+                            int id = reader.GetInt32(reader.GetOrdinal("par_id"));
+                            String name = reader.GetString(reader.GetOrdinal("par_nom"));
+                            string cognoms = reader.GetString(reader.GetOrdinal("par_cognoms"));
+                            DateTime dataNiax = reader.GetDateTime(reader.GetOrdinal("par_data_naixement"));
+                            string telefon = reader.GetString(reader.GetOrdinal("par_telefon"));
+                            string email = reader.GetString(reader.GetOrdinal("par_email"));
+                            string nif = reader.GetString(reader.GetOrdinal("par_nif"));
+                            bool esFederat = reader.GetBoolean(reader.GetOrdinal("par_es_federat"));
+                            p= new BDParticipant(id, name, cognoms, dataNiax, telefon, email, esFederat, nif);
+                        }
+                        return p;
                     }
                 }
             }

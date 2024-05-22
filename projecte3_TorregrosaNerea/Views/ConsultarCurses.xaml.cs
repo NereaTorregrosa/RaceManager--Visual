@@ -112,6 +112,7 @@ namespace projecte3_TorregrosaNerea.Views
                 btnEliminarKMChk.IsEnabled = true;
                 mostrarCheckpointsCursa();
                 circuitSeleccionat = lsvCircuits.SelectedItem as BDCircuit;
+                btnInscripcio.IsEnabled = true;
 
             }
             else
@@ -119,6 +120,7 @@ namespace projecte3_TorregrosaNerea.Views
                 btnCrearKMChk.IsEnabled = false;
                 btnGuardarKMChk.IsEnabled = false;
                 btnEliminarKMChk.IsEnabled = false;
+                btnInscripcio.IsEnabled = false;
             }
         }
 
@@ -250,6 +252,12 @@ namespace projecte3_TorregrosaNerea.Views
                 
             }
         }
+
+        private void btnInscripcio_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.navigationFrame.Navigate(new Inscripcions(circuitSeleccionat));
+        }
+
         #region Mètodes
         public void omplirCboFiltreiInicialitzarRB()
         {
@@ -274,6 +282,7 @@ namespace projecte3_TorregrosaNerea.Views
             btnCancelarCursa.IsEnabled = false;
             btnIniciarCursa.IsEnabled = false;
             btnRecepcioCorredors.IsEnabled = false;
+            btnInscripcio.IsEnabled = false;
         }
 
         private void launchGetCurses()
@@ -529,6 +538,5 @@ namespace projecte3_TorregrosaNerea.Views
 
 
         #endregion
-
     }
 }
