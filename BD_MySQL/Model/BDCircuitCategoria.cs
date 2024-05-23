@@ -128,5 +128,30 @@ namespace BD_MySQL.Model
                 }
             }
         }
+
+        public static int getCircuitCategoriaId(int idCircuit)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+                    using (var consulta = connexio.CreateCommand())
+                    {
+                        DBUtils.createParam(consulta, "id", idCircuit, System.Data.DbType.Int32);
+
+                        consulta.CommandText = @"select ccc_id from circuits_categories where ccc_cir_id = @id";
+                        DbDataReader reader = consulta.ExecuteReader();
+                        int idCircuitCategoria = 0;
+                        while (reader.Read())
+                        {
+                            idCircuitCategoria = reader.GetInt32(reader.GetOrdinal("ccc_id"));
+                        }
+
+                        return idCircuitCategoria;
+                    }
+                }
+            }
+        }
     }
 }

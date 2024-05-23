@@ -112,7 +112,15 @@ namespace projecte3_TorregrosaNerea.Views
                 btnEliminarKMChk.IsEnabled = true;
                 mostrarCheckpointsCursa();
                 circuitSeleccionat = lsvCircuits.SelectedItem as BDCircuit;
-                btnInscripcio.IsEnabled = true;
+                if(cursaSeleccionada.EstatId == 3)
+                {
+                    btnInscripcio.IsEnabled = true;
+                }
+                else
+                {
+                    btnInscripcio.IsEnabled = false;
+                }
+                
 
             }
             else

@@ -29,6 +29,16 @@ namespace BD_MySQL.Model
             IdCircuitCategoria = idCircuitCategoria;
         }
 
+        public BDInscripcio( int idParticipant, DateTime data_inscripcio, int dorsal, bool retirat, int idBeacon, int idCircuitCategoria)
+        {
+            IdParticipant = idParticipant;
+            Data_inscripcio = data_inscripcio;
+            Dorsal = dorsal;
+            Retirat = retirat;
+            IdBeacon = idBeacon;
+            IdCircuitCategoria = idCircuitCategoria;
+        }
+
         public int Id { get => id; set => id = value; }
         public int IdParticipant { get => idParticipant; set => idParticipant = value; }
         public DateTime Data_inscripcio { get => data_inscripcio; set => data_inscripcio = value; }
@@ -137,6 +147,59 @@ namespace BD_MySQL.Model
                         int count = Convert.ToInt32(consulta.ExecuteScalar());
                         return count > 0;
                     }
+                }
+            }
+        }
+
+        public static bool insertInscripcio(BDInscripcio i)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+
+                    DbTransaction transaccion = connexio.BeginTransaction();
+
+                    try
+                    {
+                        using (var consulta = connexio.CreateCommand())
+                        {
+                            consulta.Transaction = transaccion;
+                            DBUtils.createParam(consulta, "parId", i.IdParticipant, System.Data.DbType.Int32);
+                            DBUtils.createParam(consulta, "data", i.Data_inscripcio, System.Data.DbType.DateTime);
+                            DBUtils.createParam(consulta, "dorsal", i.Dorsal, System.Data.DbType.Int32);
+                            DBUtils.createParam(consulta, "retirat", i.Retirat, System.Data.DbType.Boolean);
+                            if(i.IdBeacon == 0)
+                            {
+                                DBUtils.createParam(consulta, "beaconId", null, System.Data.DbType.Int32);
+                            }
+                            else
+                            {
+                                DBUtils.createParam(consulta, "beaconId", i.IdBeacon, System.Data.DbType.Int32);
+                            }
+                            DBUtils.createParam(consulta, "idCC", i.IdCircuitCategoria, System.Data.DbType.Int32);
+
+                            consulta.CommandText = @"INSERT INTO inscripcio (ins_par_id,ins_data,
+                                                    ins_dorsal,ins_retirat,ins_bea_id,ins_ccc_id) 
+                                                    VALUES (@parId, @data,
+                                                    @dorsal,
+                                                    @retirat,
+                                                    @beaconId,
+                                                    @idCC)";
+
+                            consulta.ExecuteNonQuery();
+                            transaccion.Commit();
+                            return true;
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        transaccion.Rollback();
+                        return false;
+                    }
+
                 }
             }
         }

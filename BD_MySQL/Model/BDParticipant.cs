@@ -18,6 +18,7 @@ namespace BD_MySQL.Model
         private string telefon;
         private string email;
         private bool esFederat;
+        private int numFederat;
 
         public BDParticipant(int id, string nom, string cognoms, DateTime data_naixement, string telefon, string email, bool esFederat, string nif)
         {
@@ -31,7 +32,7 @@ namespace BD_MySQL.Model
             Nif = nif;
         }
 
-        public BDParticipant(string nom, string cognoms, DateTime data_naixement, string telefon, string email, bool esFederat, string nif)
+        public BDParticipant(string nom, string cognoms, DateTime data_naixement, string telefon, string email, bool esFederat, string nif, int numFederat)
         {
             Nom = nom;
             Cognoms = cognoms;
@@ -40,6 +41,7 @@ namespace BD_MySQL.Model
             Email = email;
             EsFederat = esFederat;
             Nif = nif;
+            NumFederat = numFederat;
         }
 
         public int Id { get => id; set => id = value; }
@@ -50,6 +52,7 @@ namespace BD_MySQL.Model
         public string Email { get => email; set => email = value; }
         public bool EsFederat { get => esFederat; set => esFederat = value; }
         public string Nif { get => nif; set => nif = value; }
+        public int NumFederat { get => numFederat; set => numFederat = value; }
 
         public static List<BDParticipant> getParticipantsFromCursa(int idCursa, String filtre = "")
         {
@@ -118,6 +121,7 @@ namespace BD_MySQL.Model
             });
         }
 
+
         public static BDParticipant getParticipantByDNI(string dni)
         {
             using (var context = new MySqlDbContext())
@@ -146,6 +150,77 @@ namespace BD_MySQL.Model
                         }
                         return p;
                     }
+                }
+            }
+        }
+
+        public static int ObtenirUltimParticipantId()
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+                    using (var consulta = connexio.CreateCommand())
+                    {
+                        consulta.CommandText = @"SELECT par_id FROM participant ORDER BY par_id DESC LIMIT 1";
+                        int ultimParticipantId = -1;
+                        object resultat = consulta.ExecuteScalar();
+                        if (resultat != null && resultat != DBNull.Value)
+                        {
+                            ultimParticipantId = Convert.ToInt32(resultat);
+                        }
+                        return ultimParticipantId;
+                    }
+                }
+            }
+        }
+
+        public static bool insertParticipant(BDParticipant p)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+
+                    DbTransaction transaccion = connexio.BeginTransaction();
+
+                    try
+                    {
+                        using (var consulta = connexio.CreateCommand())
+                        {
+                            consulta.Transaction = transaccion;
+                            DBUtils.createParam(consulta, "nif", p.Nif, System.Data.DbType.String);
+                            DBUtils.createParam(consulta, "nom", p.Nom, System.Data.DbType.String);
+                            DBUtils.createParam(consulta, "cognoms", p.Cognoms, System.Data.DbType.String);
+                            DBUtils.createParam(consulta, "dataNaix", p.Data_naixement, System.Data.DbType.DateTime);
+                            DBUtils.createParam(consulta, "telefon", p.Telefon, System.Data.DbType.String);
+                            DBUtils.createParam(consulta, "email", p.Email, System.Data.DbType.String);
+                            DBUtils.createParam(consulta, "esFederat", p.EsFederat, System.Data.DbType.Boolean);
+                            DBUtils.createParam(consulta, "numFederat", p.NumFederat, System.Data.DbType.Int32);
+
+                            consulta.CommandText = @"INSERT INTO participant (par_nif,par_nom,
+                                                    par_cognoms,par_data_naixement,par_telefon,par_email,
+                                                    par_es_federat,par_num_federat) 
+                                                    VALUES (@nif, @nom,
+                                                    @cognoms,
+                                                    @dataNaix,
+                                                    @telefon,
+                                                    @email,@esFederat,@numFederat)";
+
+                            consulta.ExecuteNonQuery();
+                            transaccion.Commit();
+                            return true;
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        transaccion.Rollback();
+                        return false;
+                    }
+
                 }
             }
         }

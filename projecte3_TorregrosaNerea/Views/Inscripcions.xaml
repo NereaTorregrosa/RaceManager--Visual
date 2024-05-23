@@ -38,27 +38,27 @@
             <TextBox x:Name="txtDNI" Grid.Column="1" Grid.Row="0" Width="200" Margin="10" TextChanged="txtDNI_TextChanged"></TextBox>
             
             <TextBlock Text="Nom:" Grid.Column="0" Grid.Row="1" Margin="10" VerticalAlignment="Center"></TextBlock>
-            <TextBox x:Name="txtNom" Grid.Column="1" Grid.Row="1" Width="200" Margin="10"></TextBox>
+            <TextBox x:Name="txtNom" Grid.Column="1" Grid.Row="1" Width="200" Margin="10" TextChanged="String_TextChanged"></TextBox>
 
             <TextBlock Text="Cognoms:" Grid.Column="0" Grid.Row="2" Margin="10" VerticalAlignment="Center"></TextBlock>
-            <TextBox x:Name="txtCognoms" Grid.Column="1" Grid.Row="2" Width="200" Margin="10"></TextBox>
+            <TextBox x:Name="txtCognoms" Grid.Column="1" Grid.Row="2" Width="200" Margin="10" TextChanged="String_TextChanged"></TextBox>
 
             <TextBlock Text="Data Naixement:" Grid.Column="0" Grid.Row="3" Margin="10" VerticalAlignment="Center"></TextBlock>
             <DatePicker x:Name="dpDataNaixement" Grid.Column="1" Grid.Row="3" Width="200" Margin="10"></DatePicker>
 
             <TextBlock Text="Telèfon:" Grid.Column="0" Grid.Row="4" Margin="10" VerticalAlignment="Center"></TextBlock>
-            <TextBox x:Name="txtTelefon" Grid.Column="1" Grid.Row="4" Width="200" Margin="10"></TextBox>
+            <TextBox x:Name="txtTelefon" Grid.Column="1" Grid.Row="4" Width="200" Margin="10" TextChanged="String_TextChanged"></TextBox>
 
             <TextBlock Text="Email:" Grid.Column="0" Grid.Row="5" Margin="10" VerticalAlignment="Center"></TextBlock>
-            <TextBox x:Name="txtEmail" Grid.Column="1" Grid.Row="5" Width="200" Margin="10"></TextBox>
+            <TextBox x:Name="txtEmail" Grid.Column="1" Grid.Row="5" Width="200" Margin="10" TextChanged="txtEmail_TextChanged"></TextBox>
 
             <TextBlock Text="Federat:" Grid.Column="0" Grid.Row="6" Margin="10" VerticalAlignment="Center"></TextBlock>
             <CheckBox x:Name="chkFederat" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" Margin="10" Checked="chkFederat_Checked" Unchecked="chkFederat_Unchecked"></CheckBox>
 
             <TextBlock Text="Número de Federat:" Grid.Column="0" Grid.Row="7" Margin="10" VerticalAlignment="Center" x:Name="lblNumeroFederat" Visibility="Collapsed"></TextBlock>
-            <TextBox x:Name="txtNumeroFederat" Grid.Column="1" Grid.Row="7" Width="200" Margin="10" Visibility="Collapsed"></TextBox>
+            <TextBox x:Name="txtNumeroFederat" Grid.Column="1" Grid.Row="7" Width="200" Margin="10" Visibility="Collapsed" TextChanged="txtNumeroFederat_TextChanged"></TextBox>
         </Grid>
 
-        <Button x:Name="btnSubmit" Content="Enviar" FontSize="20" Margin="10" Width="120" Click="btnSubmit_Click"/>
+        <Button x:Name="btnEnviar" Content="Enviar" FontSize="20" Margin="10" Width="120" Click="btnEnviar_Click"/>
     </StackPanel>
 </Page>

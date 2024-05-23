@@ -77,5 +77,22 @@ namespace projecte3_TorregrosaNerea
 
         }
 
+        public static bool EsEmailValid(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+
+            try
+            {
+                string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+                var regex = new Regex(pattern);
+                return regex.IsMatch(email);
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
+        }
+
     }
 }
