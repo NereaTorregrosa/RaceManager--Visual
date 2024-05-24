@@ -9,10 +9,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\green_dot.png" />
+    <None Remove="Assets\grey_dot.png" />
     <None Remove="Assets\logo_raceManager.jpeg" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Assets\green_dot.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\grey_dot.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\logo_raceManager.jpeg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

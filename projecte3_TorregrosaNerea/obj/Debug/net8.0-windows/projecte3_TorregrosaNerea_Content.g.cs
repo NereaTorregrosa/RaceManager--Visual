@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/green_dot.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/grey_dot.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/logo_racemanager.jpeg")]
 
 

@@ -39,7 +39,7 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <DataGrid x:Name="dgCurses" Margin="10,0,0,0" SelectionChanged="dgCurses_SelectionChanged" Foreground="Black" AutoGenerateColumns="False">
+            <DataGrid x:Name="dgCurses" Margin="10,0,0,0" SelectionChanged="dgCurses_SelectionChanged" Foreground="Black" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nom" Binding="{Binding Nom}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Data inici" Binding="{Binding DataInici, StringFormat={}{0:dd/MM/yyyy}}"></DataGridTextColumn>
@@ -115,10 +115,14 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal">
                 <Button x:Name="btnObrirInscripcioCursa" Height="30" Width="100" Content="Obrir Inscripcions" HorizontalAlignment="Left" Margin="10,0,10,0" Click="btnObrirInscripcioCursa_Click"></Button>
-                <Button x:Name="btnTancarInscripcionsCursa" Height="30" Width="120" Content="Tancar Inscripcions" HorizontalAlignment="Left" Margin="0,0,10,0" ></Button>
-                <Button x:Name="btnIniciarCursa" Height="30" Width="100" Content="Iniciar Cursa" HorizontalAlignment="Left" Margin="0,0,10,0" ></Button>
+                <Button x:Name="btnTancarInscripcionsCursa" Height="30" Width="120" Content="Tancar Inscripcions" HorizontalAlignment="Left" Margin="0,0,10,0" Click="btnTancarInscripcionsCursa_Click"></Button>
+                <Button x:Name="btnIniciarCursa" Height="30" Width="100" Content="Iniciar Cursa" HorizontalAlignment="Left" Margin="0,0,10,0" Click="btnIniciarCursa_Click"></Button>
             </StackPanel>
-            <Button x:Name="btnRecepcioCorredors" Height="30" Width="120" Content="Recepció corredors" HorizontalAlignment="Right" Margin="0,0,10,0" Click="btnRecepcioCorredors_Click"></Button>
+            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
+                <Button x:Name="btnRecepcioCorredors" Height="30" Width="120" Content="Recepció corredors" HorizontalAlignment="Right" Margin="0,0,10,0" Click="btnRecepcioCorredors_Click"></Button>
+                <Button x:Name="btnVeureResultats" Height="30" Width="120" Content="Resultats" HorizontalAlignment="Right" Margin="0,0,10,0" Click="btnVeureResultats_Click"></Button>
+            </StackPanel>
+
             <StackPanel Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal">
                 <Button x:Name="btnCrearCursa" Height="30" Width="100" Content="Crear Cursa" HorizontalAlignment="Left" Margin="0,0,10,0" Click="btnCrearCursa_Click"></Button>
                 <Button x:Name="btnEditarCursa" Height="30" Width="100" Content="Editar Cursa" HorizontalAlignment="Right" Margin="0,0,10,0" Click="btnEditarCursa_Click"></Button>

@@ -103,7 +103,7 @@ namespace BD_MySQL.Model
                         DBUtils.createParam(consulta, "id", i.Id, System.Data.DbType.Int32);
 
                         consulta.CommandText =
-                            @"update inscripcio set                             
+                            @"update inscripcions set                             
                                 ins_dorsal            = @dorsal,
                                 ins_bea_id            = @idBeacon,
                                 ins_retirat           = @retirat
@@ -137,7 +137,7 @@ namespace BD_MySQL.Model
                     {
                         consulta.CommandText = @"
                     SELECT COUNT(*)
-                    FROM inscripcio
+                    FROM inscripcions
                     WHERE ins_ccc_id = @cccId AND ins_dorsal = @dorsal
                 ";
 
@@ -180,7 +180,7 @@ namespace BD_MySQL.Model
                             }
                             DBUtils.createParam(consulta, "idCC", i.IdCircuitCategoria, System.Data.DbType.Int32);
 
-                            consulta.CommandText = @"INSERT INTO inscripcio (ins_par_id,ins_data,
+                            consulta.CommandText = @"INSERT INTO inscripcions (ins_par_id,ins_data,
                                                     ins_dorsal,ins_retirat,ins_bea_id,ins_ccc_id) 
                                                     VALUES (@parId, @data,
                                                     @dorsal,

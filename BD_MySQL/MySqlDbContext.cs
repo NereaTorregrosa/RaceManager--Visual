@@ -7,7 +7,7 @@ namespace BD_MySQL
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
 
-            optionBuilder.UseMySQL("server=127.0.0.1;database=race_manager;uid=root;pwd=admin");
+            optionBuilder.UseMySQL("server=10.100.1.25;database=race_manager;uid=root;pwd=");
         }
     }
 }

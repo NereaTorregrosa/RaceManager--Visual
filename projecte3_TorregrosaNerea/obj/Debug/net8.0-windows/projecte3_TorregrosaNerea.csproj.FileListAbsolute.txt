@@ -68,3 +68,7 @@ C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNe
 C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\projecte3_TorregrosaNerea_Content.g.cs
 C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\Views\Inscripcions.g.cs
 C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\Views\Inscripcions.baml
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\Views\LiveResults.g.cs
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\obj\Debug\net8.0-windows\Views\LiveResults.baml
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\bin\Debug\net8.0-windows\Assets\green_dot.png
+C:\Users\ntesc\Desktop\DAM2\M13\projecte3_TorregrosaNerea\projecte3_TorregrosaNerea\bin\Debug\net8.0-windows\Assets\grey_dot.png

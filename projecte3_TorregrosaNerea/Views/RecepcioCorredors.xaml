@@ -27,7 +27,7 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <DataGrid x:Name="dgParticipants" Margin="10,0,0,0" Foreground="Black" AutoGenerateColumns="False" SelectionChanged="dgParticipants_SelectionChanged">
+            <DataGrid x:Name="dgParticipants" Margin="10,0,0,0" Foreground="Black" AutoGenerateColumns="False" SelectionChanged="dgParticipants_SelectionChanged" CanUserAddRows="False" CanUserDeleteRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nom" Binding="{Binding Nom}"></DataGridTextColumn>
                     <DataGridTextColumn Width="100" Header="Cognoms" Binding="{Binding Cognoms}"></DataGridTextColumn>
