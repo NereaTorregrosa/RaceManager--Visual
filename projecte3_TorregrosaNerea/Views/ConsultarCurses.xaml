@@ -92,7 +92,7 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <DataGrid x:Name="dgKilometresCircuit" Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" AutoGenerateColumns="False" Margin="0,0,0,10" CellEditEnding="dgKilometresCircuit_CellEditEnding" SelectionChanged="dgKilometresCircuit_SelectionChanged">
+                        <DataGrid x:Name="dgKilometresCircuit" Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" AutoGenerateColumns="False" Margin="0,0,0,10" CellEditEnding="dgKilometresCircuit_CellEditEnding" SelectionChanged="dgKilometresCircuit_SelectionChanged" CanUserDeleteRows="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Km Checkpoint" Binding="{Binding Kilometre}" Width="*"></DataGridTextColumn>
                             </DataGrid.Columns>

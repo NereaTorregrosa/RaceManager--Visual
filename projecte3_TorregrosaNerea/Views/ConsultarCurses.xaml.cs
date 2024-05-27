@@ -112,7 +112,7 @@ namespace projecte3_TorregrosaNerea.Views
                 btnEliminarKMChk.IsEnabled = true;
                 mostrarCheckpointsCursa();
                 circuitSeleccionat = lsvCircuits.SelectedItem as BDCircuit;
-                if(cursaSeleccionada.EstatId == 3)
+                if(cursaSeleccionada.EstatId == 3 && cursaSeleccionada.NumParticipants < cursaSeleccionada.LimitInscripcions)
                 {
                     btnInscripcio.IsEnabled = true;
                 }
@@ -130,6 +130,8 @@ namespace projecte3_TorregrosaNerea.Views
                 btnEliminarKMChk.IsEnabled = false;
                 btnInscripcio.IsEnabled = false;
             }
+
+            activarDesactivarBotons();
         }
 
         private void btnCrearKMChk_Click(object sender, RoutedEventArgs e)
@@ -302,7 +304,7 @@ namespace projecte3_TorregrosaNerea.Views
 
         private void btnVeureResultats_Click(object sender, RoutedEventArgs e)
         {
-
+            MainWindow.navigationFrame.Navigate(new LiveResults(cursaSeleccionada,circuitSeleccionat));
         }
 
         #region Mètodes
@@ -398,8 +400,8 @@ namespace projecte3_TorregrosaNerea.Views
         private void mostrarCheckpointsCursa()
         {
             if(lsvCircuits.SelectedItem != null) { 
-                BDCircuit circuitActual = lsvCircuits.SelectedItem as BDCircuit;
-                checkpoints = BDCheckpoints.getCheckpointsFromCircuit(circuitActual.Id);
+                circuitSeleccionat = lsvCircuits.SelectedItem as BDCircuit;
+                checkpoints = BDCheckpoints.getCheckpointsFromCircuit(circuitSeleccionat.Id);
                 dgKilometresCircuit.ItemsSource = null;
                 dgKilometresCircuit.ItemsSource = checkpoints;
             }
@@ -576,7 +578,7 @@ namespace projecte3_TorregrosaNerea.Views
                     btnRecepcioCorredors.IsEnabled = false;
                 }
 
-                if (cursaSeleccionada.EstatId == 6 || cursaSeleccionada.EstatId == 7)
+                if ((cursaSeleccionada.EstatId == 6 || cursaSeleccionada.EstatId == 7) && circuitSeleccionat != null)
                 {
                     btnVeureResultats.IsEnabled = true;
                 }

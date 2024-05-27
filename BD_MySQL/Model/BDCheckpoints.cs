@@ -194,5 +194,23 @@ namespace BD_MySQL.Model
 
 
         }
+
+        public static int numeroCheckpoints(int circuitId)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+                    using (var consulta = connexio.CreateCommand())
+                    {
+                        DBUtils.createParam(consulta, "circuitId", circuitId, System.Data.DbType.Int32);
+                        consulta.CommandText = @"select count(*) from checkpoints where chk_cir_id = @circuitId";
+                        int count = Convert.ToInt32(consulta.ExecuteScalar());
+                        return count;
+                    }
+                }
+            }
+        }
     }
 }
