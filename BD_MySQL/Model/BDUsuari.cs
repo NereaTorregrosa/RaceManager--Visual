@@ -22,6 +22,11 @@ namespace BD_MySQL.Model
             Password = password;
             Admin = admin;
         }
+        public BDUsuari(string username, string password)
+        {
+            Username = username;
+            Password = password;
+        }
 
         public long Id { get => id; set => id = value; }
         public string Username { get => username; set => username = value; }

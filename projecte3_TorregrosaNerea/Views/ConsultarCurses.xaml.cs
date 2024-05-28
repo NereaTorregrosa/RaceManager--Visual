@@ -31,6 +31,7 @@ namespace projecte3_TorregrosaNerea.Views
         private BDCircuit circuitSeleccionat;
         private BDCheckpoints checkpointAbansEditar;
         private string seleccioEstat;
+        private BDUsuari usuariActual;
         public ConsultarCurses()
         {
             InitializeComponent();
@@ -41,6 +42,11 @@ namespace projecte3_TorregrosaNerea.Views
             circuitsCursa = new List<BDCircuit>();
             checkpoints = new OC<BDCheckpoints>();
         }
+        public ConsultarCurses(BDUsuari u) : this()
+        {
+            usuariActual = u;
+        }
+
 
         private void cboFiltre_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -304,9 +310,20 @@ namespace projecte3_TorregrosaNerea.Views
 
         private void btnVeureResultats_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.navigationFrame.Navigate(new LiveResults(cursaSeleccionada,circuitSeleccionat));
+            if(cursaSeleccionada.EstatId == 6)
+            {
+                MainWindow.navigationFrame.Navigate(new LiveResults(cursaSeleccionada, circuitSeleccionat, usuariActual));
+            }else if(cursaSeleccionada.EstatId == 7)
+            {
+                MainWindow.navigationFrame.Navigate(new ResultatsFinals(cursaSeleccionada, circuitSeleccionat, usuariActual));
+            }
+            
         }
 
+        private void btnSortir_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.navigationFrame.Navigate(new Login());
+        }
         #region Mètodes
         public void omplirCboFiltreiInicialitzarRB()
         {
@@ -602,6 +619,7 @@ namespace projecte3_TorregrosaNerea.Views
 
             cboEstats.ItemsSource = estats;
         }
+
 
 
         #endregion

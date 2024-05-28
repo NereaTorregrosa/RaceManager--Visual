@@ -17,6 +17,7 @@
             <RowDefinition Height="0.2*"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="Consultar Curses" FontWeight="Bold" FontSize="40" TextDecorations="Underline" Foreground="Black" Margin="10,0,0,0"></TextBlock>
+        <Button x:Name="btnSortir"  Height="30" Width="100" Content="Sortir" HorizontalAlignment="Right" Margin="10,0,40,0" Click="btnSortir_Click"></Button>
         <Grid Grid.Row="1" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>

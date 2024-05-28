@@ -203,6 +203,32 @@ namespace BD_MySQL.Model
                 }
             }
         }
+        public static bool getRetirat(int idInscripcio)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+                    using (var consulta = connexio.CreateCommand())
+                    {
+                        DBUtils.createParam(consulta, "idInscripcio", idInscripcio, System.Data.DbType.Int32);
+                        consulta.CommandText = @"SELECT ins_retirat
+                                                FROM inscripcions
+                                                WHERE ins_id = @idInscripcio;";
+
+                        DbDataReader reader = consulta.ExecuteReader();
+                        bool retirat = false;
+                        while (reader.Read())
+                        {
+                            retirat = reader.GetBoolean(reader.GetOrdinal("ins_retirat"));
+                        }
+                        return retirat;
+                    }
+                }
+            }
+        }
+
 
     }
 }

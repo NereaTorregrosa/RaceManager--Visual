@@ -13,6 +13,9 @@
     <Compile Update="Views\ConsultarCurses.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\ConsultarCursesAnonim.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\CrearCircuits.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -37,6 +40,9 @@
     <Compile Update="Views\RecepcioCorredors.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\ResultatsFinals.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainWindow.xaml">
@@ -46,6 +52,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ConsultarCurses.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ConsultarCursesAnonim.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CrearCircuits.xaml">
@@ -70,6 +79,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\RecepcioCorredors.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ResultatsFinals.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

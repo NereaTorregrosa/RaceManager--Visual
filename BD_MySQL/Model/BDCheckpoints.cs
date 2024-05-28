@@ -212,5 +212,28 @@ namespace BD_MySQL.Model
                 }
             }
         }
+
+        public static int getCheckpointById(int idCheckpoint)
+        {
+            using (var context = new MySqlDbContext())
+            {
+                using (var connexio = context.Database.GetDbConnection())
+                {
+                    connexio.Open();
+                    using (var consulta = connexio.CreateCommand())
+                    {
+                        DBUtils.createParam(consulta, "idCheckpoint", idCheckpoint, System.Data.DbType.Int32);
+                        consulta.CommandText = @"select * from checkpoints where chk_id = @idCheckpoint";
+                        DbDataReader reader = consulta.ExecuteReader();
+                        int km = 0;
+                        while (reader.Read())
+                        {
+                            km = reader.GetInt32(reader.GetOrdinal("chk_km"));
+                        }
+                        return km;
+                    }
+                }
+            }
+        }
     }
 }

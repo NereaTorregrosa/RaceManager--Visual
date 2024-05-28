@@ -28,6 +28,7 @@ namespace projecte3_TorregrosaNerea.Views
         private BDInscripcio inscripcioNova;
         private int idParticipant = 0;
         private int numFederat = 0;
+        private BDUsuari usuariActual;
         public Inscripcions()
         {
             InitializeComponent();
@@ -36,6 +37,12 @@ namespace projecte3_TorregrosaNerea.Views
         public Inscripcions(BDCircuit ci) : this()
         {
             circuitActual = ci;
+        }
+
+        public Inscripcions(BDCircuit ci,BDUsuari u) : this()
+        {
+            circuitActual = ci;
+            usuariActual = u;
         }
 
         private void chkFederat_Checked(object sender, RoutedEventArgs e)
@@ -166,7 +173,15 @@ namespace projecte3_TorregrosaNerea.Views
                 {
 
                     MessageBox.Show("Inscripció correcta!");
-                    MainWindow.navigationFrame.Navigate(new ConsultarCurses());
+                    if (usuariActual != null)
+                    {
+                        MainWindow.navigationFrame.Navigate(new ConsultarCurses(usuariActual));
+                    }
+                    else
+                    {
+                        MainWindow.navigationFrame.Navigate(new ConsultarCursesAnonim());
+                    }
+
                 }
                 else
                 {
@@ -189,7 +204,14 @@ namespace projecte3_TorregrosaNerea.Views
                         {
 
                             MessageBox.Show("Inscripció correcta!");
-                            MainWindow.navigationFrame.Navigate(new ConsultarCurses());
+                            if (usuariActual != null)
+                            {
+                                MainWindow.navigationFrame.Navigate(new ConsultarCurses(usuariActual));
+                            }
+                            else
+                            {
+                                MainWindow.navigationFrame.Navigate(new ConsultarCursesAnonim());
+                            }
                         }
                         else
                         {

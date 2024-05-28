@@ -18,6 +18,8 @@ namespace BD_MySQL.Model
         private String nomParticipant;
         private int dorsalParticipant;
         private int idParticipant;
+        private int kmCheckpoint;
+        private bool isRetirat;
 
         public BDRegistres(int id, int idInscripcio, int idCheckpoint, DateTime temps)
         {
@@ -34,6 +36,8 @@ namespace BD_MySQL.Model
         public string NomParticipant { get => nomParticipant; set => nomParticipant = value; }
         public int DorsalParticipant { get => dorsalParticipant; set => dorsalParticipant = value; }
         public int IdParticipant { get => idParticipant; set => idParticipant = value; }
+        public int KmCheckpoint { get => kmCheckpoint; set => kmCheckpoint = value; }
+        public bool IsRetirat { get => isRetirat; set => isRetirat = value; }
 
         public static OC<BDRegistres> registresCursaParcial(int idCursa,int idCircuit, string nomFiltre="",int? dorsalFiltre = null)
         {
@@ -89,10 +93,14 @@ namespace BD_MySQL.Model
                             int dorsal = reader.GetInt32(reader.GetOrdinal("ins_dorsal"));
                             int idParticipant = reader.GetInt32(reader.GetOrdinal("par_id"));
                             int idCheckpoint = reader.GetInt32(reader.GetOrdinal("reg_chk_id"));
+                            int kmCheckpoint = BDCheckpoints.getCheckpointById(idCheckpoint); 
                             BDRegistres registreNou = new BDRegistres(id,idInscripcio,idCheckpoint,temps);
+                            bool retirat = BDInscripcio.getRetirat(registreNou.IdInscripcio);
                             registreNou.NomParticipant = nom + " "+cognoms;
                             registreNou.DorsalParticipant = dorsal;
                             registreNou.IdParticipant = idParticipant;
+                            registreNou.KmCheckpoint = kmCheckpoint;
+                            registreNou.IsRetirat = retirat;
                             registres.Add(registreNou);
                         }
                         return registres;
@@ -147,6 +155,8 @@ namespace BD_MySQL.Model
                         DBUtils.createParam(consulta, "idCircuit", idCircuit, System.Data.DbType.Int32);
                         DBUtils.createParam(consulta, "idParticipant", idParticipant, System.Data.DbType.Int32);
                         consulta.CommandText = @"SELECT  
+                                                p.*, 
+                                                i.*, 
                                                 r.*
                                                 FROM 
                                                     participant p
@@ -177,9 +187,13 @@ namespace BD_MySQL.Model
                             int dorsal = reader.GetInt32(reader.GetOrdinal("ins_dorsal"));
                             int idCheckpoint = reader.GetInt32(reader.GetOrdinal("reg_chk_id"));
                             BDRegistres registreNou = new BDRegistres(id, idInscripcio, idCheckpoint, temps);
+                            int kmCheckpoint = BDCheckpoints.getCheckpointById(idCheckpoint);
+                            bool retirat = BDInscripcio.getRetirat(registreNou.IdInscripcio);
                             registreNou.NomParticipant = nom + " " + cognoms;
                             registreNou.DorsalParticipant = dorsal;
                             registreNou.IdParticipant = idParticipant;
+                            registreNou.KmCheckpoint = kmCheckpoint;
+                            registreNou.IsRetirat = retirat;
                             registres.Add(registreNou);
                         }
                         return registres;

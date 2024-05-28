@@ -28,6 +28,7 @@ namespace projecte3_TorregrosaNerea.Views
         private BDCircuit circuitActual;
         private DispatcherTimer timer;
         private OC<BDRegistres> registresActuals;
+        private BDUsuari usuariActual;
         public LiveResults()
         {
             InitializeComponent();
@@ -36,7 +37,16 @@ namespace projecte3_TorregrosaNerea.Views
             grdDetallRegistre.Visibility = Visibility.Collapsed;
         }
 
-        public LiveResults(BDCursa c,BDCircuit ci) : this()
+        public LiveResults(BDCursa c,BDCircuit ci,BDUsuari u ) : this()
+        {
+            cursaActual = c;
+            circuitActual = ci;
+            usuariActual = u;
+            launchGetResults();
+
+        }
+
+        public LiveResults(BDCursa c, BDCircuit ci) : this()
         {
             cursaActual = c;
             circuitActual = ci;
@@ -80,6 +90,7 @@ namespace projecte3_TorregrosaNerea.Views
                 txbNomParticipant.Text = registre.NomParticipant;
                 txbDorsalParticipant.Text = registre.DorsalParticipant.ToString();
                 grdDetallRegistre.Visibility = Visibility.Visible;
+                lsvCheckpoints.ItemsSource = BDRegistres.registresCursaTotal(cursaActual.Id,circuitActual.Id,registre.IdParticipant);
             }
 
             
@@ -87,7 +98,15 @@ namespace projecte3_TorregrosaNerea.Views
 
         private void btnTornarAConsultarCurses_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.navigationFrame.Navigate(new ConsultarCurses());
+            if(usuariActual != null)
+            {
+                MainWindow.navigationFrame.Navigate(new ConsultarCurses(usuariActual));
+            }
+            else
+            {
+                MainWindow.navigationFrame.Navigate(new ConsultarCursesAnonim());
+            }
+            
         }
 
         public void launchGetResults()

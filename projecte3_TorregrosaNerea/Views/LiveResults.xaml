@@ -56,12 +56,21 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsRetirat}" Value="True">
+                                <Setter Property="Background" Value="Red"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
             </DataGrid>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Margin="5">
-                <Grid x:Name="grdDetallRegistre">
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Margin="5" Width="300" Height="200">
+                <Grid x:Name="grdDetallRegistre" VerticalAlignment="Top" Width="300" Height="200">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
@@ -71,11 +80,11 @@
                         <TextBlock x:Name="txbDorsalParticipant" Margin="0,0,20,0"/>
                     </StackPanel>
 
-                    <ListView x:Name="lsvCheckpoints" Grid.Row="1"  HorizontalAlignment="Center">
+                    <ListView x:Name="lsvCheckpoints" Grid.Row="1" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" MaxHeight="200">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Checkpoint" DisplayMemberBinding="{Binding Nombre}"/>
-                                <GridViewColumn Header="Temps" DisplayMemberBinding="{Binding Tiempo}"/>
+                                <GridViewColumn Header="Checkpoint" DisplayMemberBinding="{Binding KmCheckpoint}"/>
+                                <GridViewColumn Header="Temps" DisplayMemberBinding="{Binding Temps, StringFormat={}{0:HH:mm:ss}}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>

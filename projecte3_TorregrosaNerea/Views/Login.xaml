@@ -41,6 +41,9 @@
 
         <Button x:Name="btnLogin" Content="Sign in" Click="btnLogin_Click" FontSize="20" Margin="10" Width="120" Background="#007ACC" Foreground="White"/>
 
+
+        <Button x:Name="btnAnonymous" Content="Entrar com a usuari anònim"  FontSize="20" Margin="10" Width="250" Background="#007ACC" Foreground="White" Click="btnAnonymous_Click"/>
+
         <TextBlock Text="© 2024 App Gestió de Curses" 
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Bottom" 

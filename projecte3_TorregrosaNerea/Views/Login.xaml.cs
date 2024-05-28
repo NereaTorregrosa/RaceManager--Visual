@@ -32,11 +32,17 @@ namespace projecte3_TorregrosaNerea.Views
             ok = BDUsuari.isLoginCorrect(txtUser.Text, txtPass.Password);
             if (ok)
             {
-                MainWindow.navigationFrame.Navigate(new ConsultarCurses());
+                BDUsuari user = new BDUsuari(txtUser.Text, txtPass.Password);
+                MainWindow.navigationFrame.Navigate(new ConsultarCurses(user));
             } else
             {
                 MessageBox.Show("Nom d'usuari o contrasenya incorrectes.");
             }
+        }
+
+        private void btnAnonymous_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.navigationFrame.Navigate(new ConsultarCursesAnonim());
         }
     }
 }
