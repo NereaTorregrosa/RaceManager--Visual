@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("projecte3_TorregrosaNerea")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+39bde8049740600e2c05a9bfba28dec31ab1d52f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1ccc27b6a1dd4457b2ca34d798364548214b9075")]
 [assembly: System.Reflection.AssemblyProductAttribute("projecte3_TorregrosaNerea")]
 [assembly: System.Reflection.AssemblyTitleAttribute("projecte3_TorregrosaNerea")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

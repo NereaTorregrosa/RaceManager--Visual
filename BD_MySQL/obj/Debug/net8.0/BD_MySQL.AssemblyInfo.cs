@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BD_MySQL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+39bde8049740600e2c05a9bfba28dec31ab1d52f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("BD_MySQL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BD_MySQL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -24,6 +24,7 @@ namespace projecte3_TorregrosaNerea.Views
     public partial class ConsultarCursesAnonim : Page
     {
         private List<BDCircuit> circuitsCursa;
+        private List<BDCursa> curses;
         private BDCursa cursaSeleccionada;
         private OC<BDCheckpoints> checkpoints;
         private BDCheckpoints checkpointEditat;
@@ -41,6 +42,7 @@ namespace projecte3_TorregrosaNerea.Views
             grdDetallCursa.Visibility = Visibility.Collapsed;
             circuitsCursa = new List<BDCircuit>();
             checkpoints = new OC<BDCheckpoints>();
+            curses = new List<BDCursa>();
         }
 
 
@@ -188,7 +190,9 @@ namespace projecte3_TorregrosaNerea.Views
             }
             DateTime dataSeleccionada;
             dataSeleccionada = dpFiltreData.SelectedDate ?? DateTime.MinValue;
-            dgCurses.ItemsSource = BDCursa.getCurses(txbFiltreNom.Text, dataSeleccionada, estatCursa);
+            curses = BDCursa.getCurses(txbFiltreNom.Text, dataSeleccionada, estatCursa);
+            curses.RemoveAll(c => c.EstatId == 1 || c.EstatId == 2 || c.EstatId == 4);
+            dgCurses.ItemsSource = curses;
         }
 
         private int estatSelected(string seleccio)
