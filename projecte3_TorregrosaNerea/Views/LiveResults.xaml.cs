@@ -58,12 +58,11 @@ namespace projecte3_TorregrosaNerea.Views
         {
             StackPanel stackPanel = sender as StackPanel;
             BDRegistres registre = (BDRegistres)stackPanel.Tag;
-            int numChk = BDCheckpoints.numeroCheckpoints(circuitActual.Id);
-            
-            foreach (BDRegistres actual in registresActuals)
+            if (registre != null)
             {
-                int passedCheckpoints = BDRegistres.numeroCheckpointsPassats(circuitActual.Id,actual.IdParticipant,cursaActual.Id);
-                SetImageColor(stackPanel,passedCheckpoints,numChk);
+                int numChk = BDCheckpoints.numeroCheckpoints(circuitActual.Id);
+                int passedCheckpoints = BDRegistres.numeroCheckpointsPassats(circuitActual.Id, registre.IdParticipant, cursaActual.Id);
+                SetImageColor(stackPanel, passedCheckpoints, numChk);
             }
         }
 
@@ -155,8 +154,7 @@ namespace projecte3_TorregrosaNerea.Views
 
         private void SetImageColor(StackPanel stackPanel, int passedCheckpoints, int totalCheckpoints)
         {
-            string imagePath = passedCheckpoints >= totalCheckpoints ? "pack://application:,,,/assets/green_dot.png" : "pack://application:,,,/assets/grey_dot.png";
-
+            stackPanel.Children.Clear();
             for (int i = 0; i < totalCheckpoints; i++)
             {
                 System.Windows.Controls.Image img = new System.Windows.Controls.Image();
@@ -164,7 +162,16 @@ namespace projecte3_TorregrosaNerea.Views
                 img.Height = 20;
                 BitmapImage bitmap = new BitmapImage();
                 bitmap.BeginInit();
-                bitmap.UriSource = new Uri(imagePath);
+
+                if (i < passedCheckpoints)
+                {
+                    bitmap.UriSource = new Uri("pack://application:,,,/assets/green_dot.png");
+                }
+                else
+                {
+                    bitmap.UriSource = new Uri("pack://application:,,,/assets/grey_dot.png");
+                }
+
                 bitmap.EndInit();
                 img.Source = bitmap;
                 stackPanel.Children.Add(img);

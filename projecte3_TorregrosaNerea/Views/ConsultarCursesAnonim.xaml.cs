@@ -148,7 +148,14 @@ namespace projecte3_TorregrosaNerea.Views
 
         private void btnVeureResultats_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.navigationFrame.Navigate(new LiveResults(cursaSeleccionada, circuitSeleccionat));
+            if(cursaSeleccionada.EstatId == 6)
+            {
+                MainWindow.navigationFrame.Navigate(new LiveResults(cursaSeleccionada, circuitSeleccionat));
+            }else if (cursaSeleccionada.EstatId == 7)
+            {
+                MainWindow.navigationFrame.Navigate(new ResultatsFinals(cursaSeleccionada, circuitSeleccionat));
+            }
+           
         }
 
         private void btnSortir_Click(object sender, RoutedEventArgs e)
@@ -276,13 +283,10 @@ namespace projecte3_TorregrosaNerea.Views
         public void omplirCboEstats()
         {
             List<String> estats = new List<String>();
-            estats.Add("En preparació");
-            estats.Add("Esborrades");
             estats.Add("Inscripció oberta");
             estats.Add("Inscripció tancada");
             estats.Add("En curs");
             estats.Add("Finalitzades");
-            estats.Add("Cancel·lades");
 
             cboEstats.ItemsSource = estats;
         }

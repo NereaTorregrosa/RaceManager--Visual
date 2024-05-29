@@ -118,6 +118,7 @@
                 <Button x:Name="btnObrirInscripcioCursa" Height="30" Width="100" Content="Obrir Inscripcions" HorizontalAlignment="Left" Margin="10,0,10,0" Click="btnObrirInscripcioCursa_Click"></Button>
                 <Button x:Name="btnTancarInscripcionsCursa" Height="30" Width="120" Content="Tancar Inscripcions" HorizontalAlignment="Left" Margin="0,0,10,0" Click="btnTancarInscripcionsCursa_Click"></Button>
                 <Button x:Name="btnIniciarCursa" Height="30" Width="100" Content="Iniciar Cursa" HorizontalAlignment="Left" Margin="0,0,10,0" Click="btnIniciarCursa_Click"></Button>
+                <Button x:Name="btnFinalitzarCursa" Height="30" Width="100" Content="Finalitzar Cursa" HorizontalAlignment="Left" Margin="0,0,10,0" Click="btnFinalitzarCursa_Click"></Button>
             </StackPanel>
             <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
                 <Button x:Name="btnRecepcioCorredors" Height="30" Width="120" Content="Recepció corredors" HorizontalAlignment="Right" Margin="0,0,10,0" Click="btnRecepcioCorredors_Click"></Button>

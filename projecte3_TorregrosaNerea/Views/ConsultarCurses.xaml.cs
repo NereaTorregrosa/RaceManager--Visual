@@ -324,6 +324,23 @@ namespace projecte3_TorregrosaNerea.Views
         {
             MainWindow.navigationFrame.Navigate(new Login());
         }
+
+        private void btnFinalitzarCursa_Click(object sender, RoutedEventArgs e)
+        {
+            cursaSeleccionada.EstatId = 7;
+            bool ok = BDCursa.updateCursa(cursaSeleccionada);
+            if (ok)
+            {
+                MessageBox.Show("Estat de la cursa modificat correctament.");
+                grdDetallCursa.Visibility = Visibility.Collapsed;
+                launchGetCurses();
+            }
+            else
+            {
+                MessageBox.Show("No s'ha pogut canviar l'estat de la cursa.");
+
+            }
+        }
         #region Mètodes
         public void omplirCboFiltreiInicialitzarRB()
         {
@@ -350,6 +367,7 @@ namespace projecte3_TorregrosaNerea.Views
             btnRecepcioCorredors.IsEnabled = false;
             btnInscripcio.IsEnabled = false;
             btnVeureResultats.IsEnabled = false;
+            btnFinalitzarCursa.IsEnabled = false;
         }
 
         private void launchGetCurses()
@@ -589,10 +607,12 @@ namespace projecte3_TorregrosaNerea.Views
                 if (cursaSeleccionada.EstatId == 6)
                 {
                     btnRecepcioCorredors.IsEnabled = true;
+                    btnFinalitzarCursa.IsEnabled = true;
                 }
                 else
                 {
                     btnRecepcioCorredors.IsEnabled = false;
+                    btnFinalitzarCursa.IsEnabled = false;
                 }
 
                 if ((cursaSeleccionada.EstatId == 6 || cursaSeleccionada.EstatId == 7) && circuitSeleccionat != null)
@@ -619,6 +639,7 @@ namespace projecte3_TorregrosaNerea.Views
 
             cboEstats.ItemsSource = estats;
         }
+
 
 
 
