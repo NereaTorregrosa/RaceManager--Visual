@@ -115,7 +115,6 @@ namespace projecte3_TorregrosaNerea.Views
             {
                 btnCrearKMChk.IsEnabled = true;
                 btnGuardarKMChk.IsEnabled = true;
-                btnEliminarKMChk.IsEnabled = true;
                 mostrarCheckpointsCursa();
                 circuitSeleccionat = lsvCircuits.SelectedItem as BDCircuit;
                 if(cursaSeleccionada.EstatId == 3 && cursaSeleccionada.NumParticipants < cursaSeleccionada.LimitInscripcions)
@@ -133,11 +132,10 @@ namespace projecte3_TorregrosaNerea.Views
             {
                 btnCrearKMChk.IsEnabled = false;
                 btnGuardarKMChk.IsEnabled = false;
-                btnEliminarKMChk.IsEnabled = false;
                 btnInscripcio.IsEnabled = false;
             }
 
-            activarDesactivarBotons();
+            //activarDesactivarBotons();
         }
 
         private void btnCrearKMChk_Click(object sender, RoutedEventArgs e)
@@ -358,7 +356,6 @@ namespace projecte3_TorregrosaNerea.Views
             grdDetallCursa.Visibility = Visibility.Collapsed;
             btnCrearKMChk.IsEnabled = false;
             btnGuardarKMChk.IsEnabled = false;
-            btnEliminarKMChk.IsEnabled = false;
             btnObrirInscripcioCursa.IsEnabled = false;
             btnEliminarCursa.IsEnabled = false;
             btnTancarInscripcionsCursa.IsEnabled = false;
@@ -445,7 +442,7 @@ namespace projecte3_TorregrosaNerea.Views
         private void afegirKilometreACircuit()
         {
             if (comprovarValorGridCheckpoints()) { 
-                btnGuardarKMChk.IsEnabled = true;
+                //btnGuardarKMChk.IsEnabled = true;
                 btnCrearKMChk.IsEnabled = true;
                 bool ok = BDCheckpoints.insertCheckpoint(checkpointEditat);
                 if (ok)
@@ -461,7 +458,7 @@ namespace projecte3_TorregrosaNerea.Views
             }
             else
             {
-                btnGuardarKMChk.IsEnabled = false;
+                //btnGuardarKMChk.IsEnabled = false;
                 btnCrearKMChk.IsEnabled = false;
             }
         }
@@ -562,8 +559,6 @@ namespace projecte3_TorregrosaNerea.Views
                     btnEditarCircuit.IsEnabled = true;
                     btnCrearCircuit.IsEnabled = true;
                     btnCrearKMChk.IsEnabled = true;
-                    btnEliminarKMChk.IsEnabled = true;
-                    btnEliminarKMChk.IsEnabled = true;
                 }
                 else
                 {
@@ -573,8 +568,6 @@ namespace projecte3_TorregrosaNerea.Views
                     btnEditarCircuit.IsEnabled = false;
                     btnCrearCircuit.IsEnabled = false;
                     btnCrearKMChk.IsEnabled = false;
-                    btnEliminarKMChk.IsEnabled = false;
-                    btnEliminarKMChk.IsEnabled = false;
                 }
 
                 if (cursaSeleccionada.EstatId == 3 || cursaSeleccionada.EstatId == 6 || cursaSeleccionada.EstatId == 5)
